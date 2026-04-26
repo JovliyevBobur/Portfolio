@@ -59,14 +59,14 @@ const About = () => {
               >
                 Men haqimda
               </motion.span>
-              <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold font-heading leading-tight">
+              <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold font-heading leading-tight">
                 Dasturiy mahsulotlarni <br />
                 <span className="gradient-text glow-text-primary italic">san'at darajasiga</span> <br />
                 chiqaraman.
               </h2>
             </div>
 
-            <div className="space-y-6 text-lg leading-relaxed text-muted-foreground max-w-xl">
+            <div className="space-y-6 text-base leading-relaxed text-muted-foreground max-w-xl">
               <p>
                 Salom! Men <span className="text-white font-bold">Jovliyev Bobur</span>, 2010-yilda tug'ilgan, lekin yosh bo'lishimga qaramay dasturlash dunyosida 3 yildan ortiq professional tajribaga ega bo'lgan <span className="text-primary font-medium">Software Engineer</span>man.
               </p>
@@ -85,8 +85,8 @@ const About = () => {
                   className="glass p-6 rounded-2xl border border-primary/10 group hover:border-primary/40 transition-all"
                 >
                   <stat.icon className="w-8 h-8 text-primary mb-3 group-hover:scale-110 transition-transform" />
-                  <div className="text-3xl font-extrabold text-white mb-1">{stat.value}</div>
-                  <div className="text-sm text-muted-foreground uppercase tracking-wider">{stat.label}</div>
+                  <div className="text-2xl font-extrabold text-white mb-1">{stat.value}</div>
+                  <div className="text-xs text-muted-foreground uppercase tracking-wider">{stat.label}</div>
                 </motion.div>
               ))}
             </div>
