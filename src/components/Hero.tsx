@@ -8,7 +8,19 @@ import { useState } from "react";
 
 const Hero = () => {
   const { t } = useTranslation();
-  const [showBgImage, setShowBgImage] = useState(false);
+  
+  const bgImages = [
+    "/bg/9043487.jpg",
+    "/bg/images.jfif",
+    "/bg/Без названия (1).jfif",
+    "/bg/Без названия (2).jfif",
+    "/bg/Без названия (3).jfif",
+    "/bg/Без названия (4).jfif",
+    "/bg/Без названия (5).jfif",
+    "/bg/Без названия (6).jfif",
+    "/bg/Без названия.jfif",
+  ];
+  const [activeBgIndex, setActiveBgIndex] = useState<number | null>(null);
   
   const socialLinks = [
     { icon: Github, href: "https://github.com/JBoburHacker005", label: "GitHub" },
@@ -20,13 +32,15 @@ const Hero = () => {
   return (
     <>
     <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden py-10">
-      {showBgImage && (
+      {activeBgIndex !== null && (
         <motion.div
+          key={activeBgIndex}
           className="absolute inset-0 z-0 pointer-events-none mix-blend-screen"
+          initial={{ opacity: 0 }}
           animate={{ opacity: [0.2, 0.6, 0.2] }}
           transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
         >
-          <img src="/bg-1.png" alt="animated background" className="w-full h-full object-cover" />
+          <img src={bgImages[activeBgIndex]} alt="animated background" className="w-full h-full object-cover" />
         </motion.div>
       )}
       <ParticleBackground />
@@ -182,17 +196,38 @@ const Hero = () => {
         </motion.div>
       </div>
       
-      <div className="absolute bottom-4 right-4 z-50 flex items-center gap-2 glass px-4 py-2 rounded-lg border border-primary/20">
-        <input 
-          type="checkbox" 
-          id="bg-toggle" 
-          checked={showBgImage}
-          onChange={(e) => setShowBgImage(e.target.checked)}
-          className="w-4 h-4 cursor-pointer accent-primary"
-        />
-        <label htmlFor="bg-toggle" className="text-sm font-medium text-white cursor-pointer select-none">
-          {t('Hero.ToggleBg') || 'Toggle Image BG'}
-        </label>
+      <div className="absolute bottom-4 right-4 z-50 flex flex-col items-end gap-2 max-w-sm sm:max-w-md md:max-w-lg lg:max-w-xl">
+        <div className="glass px-4 py-3 rounded-lg border border-primary/20 flex flex-wrap gap-x-4 gap-y-2 justify-end">
+          <div className="w-full text-sm font-medium text-white mb-1 text-right border-b border-primary/20 pb-1">
+            {t('Hero.ToggleBg') || 'Background Image'}
+          </div>
+          
+          <label className="flex items-center gap-1.5 cursor-pointer">
+            <input 
+              type="radio" 
+              name="bg-selection"
+              checked={activeBgIndex === null}
+              onChange={() => setActiveBgIndex(null)}
+              className="w-4 h-4 accent-primary cursor-pointer"
+            />
+            <span className="text-xs text-white/90 select-none cursor-pointer hover:text-primary transition-colors">None</span>
+          </label>
+          
+          {bgImages.map((_, idx) => (
+            <label key={idx} className="flex items-center gap-1.5 cursor-pointer">
+              <input 
+                type="radio" 
+                name="bg-selection"
+                checked={activeBgIndex === idx}
+                onChange={() => setActiveBgIndex(idx)}
+                className="w-4 h-4 accent-primary cursor-pointer"
+              />
+              <span className="text-xs text-white/90 select-none cursor-pointer hover:text-primary transition-colors">
+                Img {idx + 1}
+              </span>
+            </label>
+          ))}
+        </div>
       </div>
       </section>
 
