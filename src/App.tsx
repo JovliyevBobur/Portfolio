@@ -15,6 +15,8 @@ import CertificatesPage from "./pages/CertificatesPage";
 import { CustomCursor } from "./components/CustomCursor";
 import { PersistentPortrait } from "./components/PersistentPortrait";
 import { LanguageSelector } from "./components/LanguageSelector";
+import { BgProvider } from "./contexts/BgContext";
+import Preloader from "./components/Preloader";
 
 const queryClient = new QueryClient();
 
@@ -39,14 +41,17 @@ const AnimatedRoutes = () => {
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
+      <Preloader />
       <Toaster />
       <Sonner />
       <CustomCursor />
       <PersistentPortrait />
       <LanguageSelector />
-      <BrowserRouter>
-        <AnimatedRoutes />
-      </BrowserRouter>
+      <BgProvider>
+        <BrowserRouter>
+          <AnimatedRoutes />
+        </BrowserRouter>
+      </BgProvider>
     </TooltipProvider>
   </QueryClientProvider>
 );
