@@ -46,14 +46,20 @@ const Preloader = () => {
               <img 
                 src="/brand-logo.png" 
                 alt="Logo" 
-                className="w-20 h-20 md:w-28 md:h-28 object-contain drop-shadow-[0_0_15px_rgba(6,182,212,0.5)]" 
+                className="w-24 h-24 md:w-32 md:h-32 object-contain drop-shadow-[0_0_15px_rgba(6,182,212,0.5)]" 
               />
-              <div className="flex flex-col text-left">
-                <span className="text-3xl md:text-5xl font-bold text-white tracking-wide leading-tight font-heading">
-                  Jovliyev Bobur
+              <div className="flex flex-col text-left font-heading">
+                <span className="text-3xl md:text-5xl font-bold text-white tracking-wide leading-tight">
+                  Jovliyev
                 </span>
-                <span className="text-3xl md:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 to-purple-400 tracking-wide leading-tight font-heading" style={{ filter: 'drop-shadow(0 0 10px rgba(6,182,212,0.4))' }}>
-                  Nuriddin o'g'li
+                <span className="text-3xl md:text-5xl font-bold text-white tracking-wide leading-tight">
+                  Bobur
+                </span>
+                <span className="text-3xl md:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 to-purple-400 tracking-wide leading-tight" style={{ filter: 'drop-shadow(0 0 10px rgba(6,182,212,0.4))' }}>
+                  Nuriddin
+                </span>
+                <span className="text-3xl md:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 to-purple-400 tracking-wide leading-tight" style={{ filter: 'drop-shadow(0 0 10px rgba(6,182,212,0.4))' }}>
+                  o'g'li
                 </span>
               </div>
             </motion.div>
