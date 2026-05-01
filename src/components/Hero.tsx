@@ -4,9 +4,11 @@ import { Github, Linkedin, Mail, Instagram, Layout, Database, Smartphone, Code }
 import { Button } from "./ui/button";
 import ParticleBackground from "./ParticleBackground";
 import { useTranslation } from "react-i18next";
+import { useState } from "react";
 
 const Hero = () => {
   const { t } = useTranslation();
+  const [showBgImage, setShowBgImage] = useState(false);
   
   const socialLinks = [
     { icon: Github, href: "https://github.com/JBoburHacker005", label: "GitHub" },
@@ -18,6 +20,15 @@ const Hero = () => {
   return (
     <>
     <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden py-10">
+      {showBgImage && (
+        <motion.div
+          className="absolute inset-0 z-0 pointer-events-none mix-blend-screen"
+          animate={{ opacity: [0.2, 0.6, 0.2] }}
+          transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+        >
+          <img src="/bg-1.png" alt="animated background" className="w-full h-full object-cover" />
+        </motion.div>
+      )}
       <ParticleBackground />
       
       <div className="container mx-auto px-4 z-10">
@@ -157,7 +168,7 @@ const Hero = () => {
 
 
 
-      <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2">
+      <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2 z-20">
         <motion.div
           animate={{ y: [0, 8, 0] }}
           transition={{ duration: 2, repeat: Infinity }}
@@ -169,6 +180,19 @@ const Hero = () => {
             className="w-1 h-1 bg-primary/60 rounded-full"
           />
         </motion.div>
+      </div>
+      
+      <div className="absolute bottom-4 right-4 z-50 flex items-center gap-2 glass px-4 py-2 rounded-lg border border-primary/20">
+        <input 
+          type="checkbox" 
+          id="bg-toggle" 
+          checked={showBgImage}
+          onChange={(e) => setShowBgImage(e.target.checked)}
+          className="w-4 h-4 cursor-pointer accent-primary"
+        />
+        <label htmlFor="bg-toggle" className="text-sm font-medium text-white cursor-pointer select-none">
+          {t('Hero.ToggleBg') || 'Toggle Image BG'}
+        </label>
       </div>
       </section>
 
