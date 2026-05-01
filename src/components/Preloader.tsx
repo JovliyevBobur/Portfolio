@@ -52,14 +52,8 @@ const Preloader = () => {
                 <span className="text-3xl md:text-5xl font-bold text-white tracking-wide leading-tight">
                   Jovliyev
                 </span>
-                <span className="text-3xl md:text-5xl font-bold text-white tracking-wide leading-tight">
+                <span className="text-3xl md:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 to-purple-400 tracking-wide leading-tight" style={{ filter: 'drop-shadow(0 0 10px rgba(6,182,212,0.4))' }}>
                   Bobur
-                </span>
-                <span className="text-3xl md:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 to-purple-400 tracking-wide leading-tight" style={{ filter: 'drop-shadow(0 0 10px rgba(6,182,212,0.4))' }}>
-                  Nuriddin
-                </span>
-                <span className="text-3xl md:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 to-purple-400 tracking-wide leading-tight" style={{ filter: 'drop-shadow(0 0 10px rgba(6,182,212,0.4))' }}>
-                  o'g'li
                 </span>
               </div>
             </motion.div>
