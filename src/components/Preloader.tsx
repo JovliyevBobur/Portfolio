@@ -36,24 +36,36 @@ const Preloader = () => {
           transition={{ duration: 0.8, ease: "easeInOut" }}
           className="fixed inset-0 z-[99999] bg-black flex flex-col items-center justify-center text-white"
         >
-          <div className="flex flex-col items-center w-full max-w-sm px-8">
-            <motion.h1 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 }}
-              className="text-2xl md:text-3xl font-bold mb-12 text-center bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary"
+          <div className="flex flex-col items-center w-full max-w-md px-4">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.2, duration: 0.5 }}
+              className="flex items-center justify-center gap-4 md:gap-6 mb-16"
             >
-              Jovliyev Bobur<br/>Nuriddin o'g'li
-            </motion.h1>
+              <img 
+                src="/brand-logo.png" 
+                alt="Logo" 
+                className="w-20 h-20 md:w-28 md:h-28 object-contain drop-shadow-[0_0_15px_rgba(6,182,212,0.5)]" 
+              />
+              <div className="flex flex-col text-left">
+                <span className="text-3xl md:text-5xl font-bold text-white tracking-wide leading-tight font-heading">
+                  Jovliyev Bobur
+                </span>
+                <span className="text-3xl md:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 to-purple-400 tracking-wide leading-tight font-heading" style={{ filter: 'drop-shadow(0 0 10px rgba(6,182,212,0.4))' }}>
+                  Nuriddin o'g'li
+                </span>
+              </div>
+            </motion.div>
 
-            <div className="w-full relative flex flex-col items-center">
-              <span className="text-xl md:text-2xl font-semibold mb-4 tabular-nums tracking-widest">
+            <div className="w-full relative flex flex-col items-center px-4 md:px-12">
+              <span className="text-xl md:text-2xl font-bold mb-4 tabular-nums tracking-widest text-white drop-shadow-md">
                 {progress}%
               </span>
               
-              <div className="w-full h-[2px] bg-gray-800 rounded-full overflow-hidden relative">
+              <div className="w-full h-[3px] bg-white/10 rounded-full overflow-hidden relative shadow-[0_0_10px_rgba(255,255,255,0.1)]">
                 <motion.div 
-                  className="absolute top-0 left-0 h-full bg-gradient-to-r from-purple-600 to-cyan-400"
+                  className="absolute top-0 left-0 h-full bg-gradient-to-r from-purple-500 via-cyan-400 to-cyan-300 shadow-[0_0_15px_rgba(6,182,212,0.8)]"
                   style={{ width: `${progress}%` }}
                   layout
                 />

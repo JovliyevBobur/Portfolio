@@ -13,12 +13,13 @@ export default function Layout({ children }: { children: ReactNode }) {
       {activeBgIndex !== null && (
         <motion.div
           key={activeBgIndex}
-          className="fixed inset-0 z-0 pointer-events-none mix-blend-screen"
+          className="fixed inset-0 z-0 pointer-events-none"
           initial={{ opacity: 0 }}
-          animate={{ opacity: [0.2, 0.6, 0.2] }}
+          animate={{ opacity: [0.3, 0.7, 0.3] }}
           transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
         >
-          <img src={bgImages[activeBgIndex]} alt="animated background" className="w-full h-full object-cover" />
+          <img src={bgImages[activeBgIndex]} alt="animated background" className="absolute inset-0 w-full h-full object-cover" />
+          <div className="absolute inset-0 bg-background/80" />
         </motion.div>
       )}
       
