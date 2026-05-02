@@ -1,7 +1,8 @@
-import { Github, Linkedin, Instagram, Send, Heart } from "lucide-react";
-
+import { Github, Linkedin, Instagram, Send, Heart, Check } from "lucide-react";
+import { useBg, bgImages } from "../contexts/BgContext";
 const Footer = () => {
   const currentYear = new Date().getFullYear();
+  const { activeBgIndex, setActiveBgIndex } = useBg();
 
   return (
     <footer className="border-t border-primary/10 bg-background/50 backdrop-blur-lg pt-16 pb-8 relative">
@@ -70,6 +71,40 @@ const Footer = () => {
                 </li>
               ))}
             </ul>
+          </div>
+        </div>
+
+        {/* Background Selector */}
+        <div className="flex flex-col items-center justify-center pt-8 mb-8 border-t border-primary/10">
+          <h4 className="text-sm font-medium text-muted-foreground mb-4">Orqa fonni tanlang</h4>
+          <div className="flex flex-wrap items-center justify-center gap-3">
+            {/* None option */}
+            <button
+              onClick={() => setActiveBgIndex(null)}
+              className="relative w-10 h-10 rounded-md bg-white border-2 transition-all duration-300 flex items-center justify-center overflow-hidden"
+              style={{ borderColor: activeBgIndex === null ? 'hsl(var(--primary))' : 'transparent' }}
+              aria-label="No background"
+            >
+              {activeBgIndex === null && <Check className="w-5 h-5 text-primary drop-shadow-md z-10" />}
+            </button>
+            
+            {/* Image options */}
+            {bgImages.map((imgUrl, idx) => (
+              <button
+                key={idx}
+                onClick={() => setActiveBgIndex(idx)}
+                className="relative w-10 h-10 rounded-md bg-[#1a1a1a] border-2 transition-all duration-300 flex items-center justify-center overflow-hidden group"
+                style={{ borderColor: activeBgIndex === idx ? 'hsl(var(--primary))' : 'transparent' }}
+                aria-label={`Background ${idx + 1}`}
+              >
+                <img 
+                  src={imgUrl} 
+                  alt={`Bg ${idx + 1}`} 
+                  className="absolute inset-0 w-full h-full object-cover opacity-50 group-hover:opacity-80 transition-opacity"
+                />
+                {activeBgIndex === idx && <Check className="w-5 h-5 text-primary drop-shadow-md z-10" />}
+              </button>
+            ))}
           </div>
         </div>
 
