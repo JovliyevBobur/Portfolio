@@ -1,5 +1,7 @@
 import { Github, Linkedin, Instagram, Send, Heart, Check } from "lucide-react";
-import { useBg, bgImages } from "../contexts/BgContext";
+import { useBg, bgCount } from "../contexts/BgContext";
+import { bgAnimations, AnimatedBgThumb } from "./AnimatedBackgrounds";
+
 const Footer = () => {
   const currentYear = new Date().getFullYear();
   const { activeBgIndex, setActiveBgIndex } = useBg();
@@ -81,28 +83,28 @@ const Footer = () => {
             {/* None option */}
             <button
               onClick={() => setActiveBgIndex(null)}
-              className="relative w-10 h-10 rounded-md bg-white border-2 transition-all duration-300 flex items-center justify-center overflow-hidden"
-              style={{ borderColor: activeBgIndex === null ? 'hsl(var(--primary))' : 'transparent' }}
+              className="relative w-12 h-12 rounded-lg bg-[#1a1e2e] border-2 transition-all duration-300 flex items-center justify-center overflow-hidden hover:scale-110"
+              style={{ borderColor: activeBgIndex === null ? 'hsl(189,94%,60%)' : 'rgba(255,255,255,0.1)' }}
               aria-label="No background"
             >
               {activeBgIndex === null && <Check className="w-5 h-5 text-primary drop-shadow-md z-10" />}
             </button>
             
-            {/* Image options */}
-            {bgImages.map((imgUrl, idx) => (
+            {/* Animation options */}
+            {bgAnimations.map((anim, idx) => (
               <button
                 key={idx}
                 onClick={() => setActiveBgIndex(idx)}
-                className="relative w-10 h-10 rounded-md bg-[#1a1a1a] border-2 transition-all duration-300 flex items-center justify-center overflow-hidden group"
-                style={{ borderColor: activeBgIndex === idx ? 'hsl(var(--primary))' : 'transparent' }}
-                aria-label={`Background ${idx + 1}`}
+                className="relative w-12 h-12 rounded-lg border-2 transition-all duration-300 flex items-center justify-center overflow-hidden group hover:scale-110"
+                style={{ 
+                  borderColor: activeBgIndex === idx ? 'hsl(189,94%,60%)' : 'rgba(255,255,255,0.1)',
+                  background: '#0a0e14'
+                }}
+                aria-label={`Background: ${anim.name}`}
+                title={anim.name}
               >
-                <img 
-                  src={imgUrl} 
-                  alt={`Bg ${idx + 1}`} 
-                  className="absolute inset-0 w-full h-full object-cover opacity-50 group-hover:opacity-80 transition-opacity"
-                />
-                {activeBgIndex === idx && <Check className="w-5 h-5 text-primary drop-shadow-md z-10" />}
+                <AnimatedBgThumb index={idx} size={48} />
+                {activeBgIndex === idx && <Check className="w-5 h-5 text-primary drop-shadow-md z-10 relative" />}
               </button>
             ))}
           </div>

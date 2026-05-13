@@ -1,16 +1,7 @@
 import React, { createContext, useContext, useState, ReactNode } from "react";
+import { bgAnimations } from "../components/AnimatedBackgrounds";
 
-export const bgImages = [
-  "/bg/9043487.jpg",
-  "/bg/images.jfif",
-  "/bg/Без названия (1).jfif",
-  "/bg/Без названия (2).jfif",
-  "/bg/Без названия (3).jfif",
-  "/bg/Без названия (4).jfif",
-  "/bg/Без названия (5).jfif",
-  "/bg/Без названия (6).jfif",
-  "/bg/Без названия.jfif",
-];
+export const bgCount = bgAnimations.length;
 
 interface BgContextType {
   activeBgIndex: number | null;
