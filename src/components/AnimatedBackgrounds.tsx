@@ -366,14 +366,13 @@ function drawUzbekIslamic(ctx: CanvasRenderingContext2D, w: number, h: number, s
   ctx.restore();
 
   // ════════════════════════════════
-  // 3. LANTERNS — top-left, on chains, swaying
+  // 3. LANTERNS — single big top-left, on chain, swaying
   // ════════════════════════════════
 
-  // Lantern definitions: [anchorX%, anchorY%, size_scale, phase, sway_amp]
+  // Calculate size to be approximately 1/8th of screen width, but at least large enough
+  const baseScale = Math.max(w / 320, h / 450, 1.8);
   const lanterns = [
-    { ax: w * 0.11, ay: 0, sz: 1.0,  ph: 0.0,  sw: 14 },  // big front-left
-    { ax: w * 0.22, ay: 0, sz: 0.72, ph: 1.4,  sw: 10 },  // medium middle
-    { ax: w * 0.32, ay: 0, sz: 0.50, ph: 2.7,  sw: 8  },  // small back-right
+    { ax: w * 0.18, ay: -h * 0.05, sz: baseScale, ph: 0.0 }, // single big lantern
   ];
 
   // Helper: draw one hexagonal lantern
@@ -482,9 +481,11 @@ function drawUzbekIslamic(ctx: CanvasRenderingContext2D, w: number, h: number, s
   };
 
   lanterns.forEach((ln) => {
-    const flicker = 0.72 + Math.sin(t * 3.8 + ln.ph) * 0.18 + Math.sin(t * 7.2 + ln.ph + 1) * 0.1;
-    const swayAng = Math.sin(t * 0.7 + ln.ph) * 0.06 + Math.sin(t * 1.3 + ln.ph) * 0.02;
-    const chainLen = h * (0.1 + ln.sz * 0.05);
+    // Slower flicker
+    const flicker = 0.75 + Math.sin(t * 1.5 + ln.ph) * 0.15 + Math.sin(t * 3.2 + ln.ph) * 0.1;
+    // Slower, wider sway
+    const swayAng = Math.sin(t * 0.4 + ln.ph) * 0.08 + Math.sin(t * 0.9 + ln.ph) * 0.03;
+    const chainLen = h * (0.15 + ln.sz * 0.05);
 
     // Chain (series of short segments to simulate links)
     const chainLinks = Math.floor(chainLen / (8 * ln.sz));
