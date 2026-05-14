@@ -218,6 +218,138 @@ function drawWaves(ctx: CanvasRenderingContext2D, w: number, h: number, state: a
   }
 }
 
+// ─── 9. O'zbek-Islom (Mandala + Lantern glow) ───
+function drawUzbekIslamic(ctx: CanvasRenderingContext2D, w: number, h: number, state: any) {
+  if (!state.t) state.t = 0;
+  state.t += 0.008;
+  const t = state.t;
+
+  // Dark warm background
+  ctx.fillStyle = "rgba(8,6,18,0.13)";
+  ctx.fillRect(0, 0, w, h);
+
+  // ── Lantern glow orbs (warm orange-amber like the photo) ──
+  if (!state.lanterns) {
+    state.lanterns = [
+      { x: w * 0.25, y: h * 0.18, phase: 0 },
+      { x: w * 0.55, y: h * 0.12, phase: 1.2 },
+      { x: w * 0.78, y: h * 0.22, phase: 2.4 },
+      { x: w * 0.1, y: h * 0.45, phase: 0.8 },
+      { x: w * 0.9, y: h * 0.38, phase: 1.9 },
+    ];
+  }
+  state.lanterns.forEach((ln: any) => {
+    const flicker = 0.7 + Math.sin(t * 3.7 + ln.phase) * 0.3 + Math.sin(t * 7.1 + ln.phase) * 0.1;
+    const sway = Math.sin(t * 0.8 + ln.phase) * 6;
+    const gx = ln.x + sway, gy = ln.y + Math.sin(t * 0.5 + ln.phase) * 4;
+    // outer glow
+    const g1 = ctx.createRadialGradient(gx, gy, 0, gx, gy, 80);
+    g1.addColorStop(0, `rgba(255,160,40,${0.12 * flicker})`);
+    g1.addColorStop(0.4, `rgba(220,100,20,${0.07 * flicker})`);
+    g1.addColorStop(1, `rgba(180,60,10,0)`);
+    ctx.fillStyle = g1; ctx.beginPath(); ctx.arc(gx, gy, 80, 0, Math.PI * 2); ctx.fill();
+    // inner core
+    const g2 = ctx.createRadialGradient(gx, gy, 0, gx, gy, 18);
+    g2.addColorStop(0, `rgba(255,230,140,${0.9 * flicker})`);
+    g2.addColorStop(0.5, `rgba(255,160,40,${0.5 * flicker})`);
+    g2.addColorStop(1, `rgba(200,80,10,0)`);
+    ctx.fillStyle = g2; ctx.beginPath(); ctx.arc(gx, gy, 18, 0, Math.PI * 2); ctx.fill();
+  });
+
+  // ── Islamic star pattern tiles ──
+  const drawStar = (cx: number, cy: number, r: number, pts: number, angle: number, colorPrefix: string, alpha: number) => {
+    ctx.beginPath();
+    for (let i = 0; i < pts * 2; i++) {
+      const rad = i % 2 === 0 ? r : r * 0.42;
+      const a = (i * Math.PI) / pts + angle;
+      if (i === 0) ctx.moveTo(cx + rad * Math.cos(a), cy + rad * Math.sin(a));
+      else ctx.lineTo(cx + rad * Math.cos(a), cy + rad * Math.sin(a));
+    }
+    ctx.closePath();
+    ctx.strokeStyle = `${colorPrefix},${alpha})`;
+    ctx.lineWidth = 0.8;
+    ctx.stroke();
+  };
+
+  // Tile the stars across screen
+  const tileSize = Math.min(w, h) * 0.22;
+  const cols = Math.ceil(w / tileSize) + 2;
+  const rows = Math.ceil(h / tileSize) + 2;
+  for (let row = -1; row < rows; row++) {
+    for (let col = -1; col < cols; col++) {
+      const cx = col * tileSize + (row % 2 === 0 ? 0 : tileSize / 2);
+      const cy = row * tileSize * 0.866;
+      const pulse = 0.25 + Math.sin(t * 0.6 + col * 0.4 + row * 0.3) * 0.12;
+      drawStar(cx, cy, tileSize * 0.38, 8, t * 0.15 + col * 0.1, 'rgba(180,140,60', pulse);
+      drawStar(cx, cy, tileSize * 0.22, 6, -t * 0.2 + row * 0.15, 'rgba(60,160,200', pulse * 0.8);
+    }
+  }
+
+  // ── Central rotating mandala ──
+  const cx = w / 2, cy = h / 2;
+  const baseR = Math.min(w, h) * 0.28;
+  const colors = [
+    `rgba(210,160,50,`, // gold
+    `rgba(0,180,220,`,  // teal/uzbek blue
+    `rgba(0,160,80,`,   // green (islam)
+    `rgba(180,120,200,`,// purple accent
+  ];
+
+  for (let ring = 0; ring < 6; ring++) {
+    const r = baseR * (0.2 + ring * 0.16);
+    const petals = 8 + ring * 4;
+    const rot = t * (ring % 2 === 0 ? 0.3 : -0.25) + ring * 0.15;
+    const col = colors[ring % colors.length];
+    const alpha = (0.22 - ring * 0.02) * (0.6 + Math.sin(t + ring) * 0.4);
+
+    ctx.beginPath();
+    for (let i = 0; i <= petals * 2; i++) {
+      const a = (i / petals) * Math.PI + rot;
+      const rr = i % 2 === 0 ? r : r * 0.72;
+      if (i === 0) ctx.moveTo(cx + rr * Math.cos(a), cy + rr * Math.sin(a));
+      else ctx.lineTo(cx + rr * Math.cos(a), cy + rr * Math.sin(a));
+    }
+    ctx.closePath();
+    ctx.strokeStyle = `${col}${alpha})`;
+    ctx.lineWidth = 1.2;
+    ctx.stroke();
+
+    // Petal fill for inner rings
+    if (ring < 3) {
+      ctx.fillStyle = `${col}${alpha * 0.25})`;
+      ctx.fill();
+    }
+  }
+
+  // Central dot
+  const cg = ctx.createRadialGradient(cx, cy, 0, cx, cy, baseR * 0.08);
+  cg.addColorStop(0, `rgba(255,210,80,${0.7 + Math.sin(t * 2) * 0.3})`);
+  cg.addColorStop(1, `rgba(255,150,30,0)`);
+  ctx.fillStyle = cg; ctx.beginPath(); ctx.arc(cx, cy, baseR * 0.08, 0, Math.PI * 2); ctx.fill();
+
+  // ── Corner arabesque ornaments ──
+  const corners = [[0, 0], [w, 0], [0, h], [w, h]];
+  corners.forEach(([ox, oy], ci) => {
+    const r2 = Math.min(w, h) * 0.12;
+    const rot2 = t * 0.2 + ci * Math.PI / 2;
+    const alpha2 = 0.15 + Math.sin(t + ci) * 0.06;
+    for (let p = 0; p < 2; p++) {
+      ctx.beginPath();
+      for (let i = 0; i <= 12; i++) {
+        const a = (i / 6) * Math.PI + rot2;
+        const rr = i % 2 === 0 ? r2 * (0.6 + p * 0.4) : r2 * 0.4;
+        const px = ox + rr * Math.cos(a) * (ox === 0 ? 1 : -1);
+        const py = oy + rr * Math.sin(a) * (oy === 0 ? 1 : -1);
+        if (i === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+      }
+      ctx.closePath();
+      ctx.strokeStyle = `rgba(200,150,40,${alpha2})`;
+      ctx.lineWidth = 0.7;
+      ctx.stroke();
+    }
+  });
+}
+
 // ─── Master list ───
 export const bgAnimations = [
   { name: "Yomg'ir", draw: drawRain, color: "#0af" },
@@ -228,6 +360,7 @@ export const bgAnimations = [
   { name: "Grid", draw: drawGrid, color: "#06b6d4" },
   { name: "Pufaklar", draw: drawBubbles, color: "#8b5cf6" },
   { name: "To'lqinlar", draw: drawWaves, color: "#14b8a6" },
+  { name: "O'zbek-Islom", draw: drawUzbekIslamic, color: "#d4a017" },
 ];
 
 // ─── Canvas Component ───
