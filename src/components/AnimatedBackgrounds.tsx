@@ -370,12 +370,12 @@ function drawUzbekIslamic(ctx: CanvasRenderingContext2D, w: number, h: number, s
   // ════════════════════════════════
 
   // Calculate base scale - significantly larger as requested
-  const baseScale = Math.max(w / 800, h / 600, 1.4);
+  const baseScale = Math.max(w / 1000, h / 800, 1.2);
   const lanterns = [
-    { ax: w * 0.18, ay: -h * 0.01, sz: baseScale * 2.00, ph: 0.0 },  // Front-left, very big
-    { ax: w * 0.35, ay: -h * 0.02, sz: baseScale * 1.25, ph: 1.4 },  // Middle-right, medium
-    { ax: w * 0.26, ay: -h * 0.04, sz: baseScale * 0.85, ph: 2.7 },  // Back-middle, small
-    { ax: w * 0.44, ay: -h * 0.05, sz: baseScale * 0.70, ph: 4.1 },  // Far-back-right, tiny
+    { ax: w * 0.18, ay: -h * 0.05, sz: baseScale * 2.8, ph: 0.0, blur: 0 },   // Front-left, very big
+    { ax: w * 0.42, ay: -h * 0.01, sz: baseScale * 1.7, ph: 1.4, blur: 0.8 }, // Middle-right, medium
+    { ax: w * 0.30, ay: -h * 0.15, sz: baseScale * 0.9, ph: 2.7, blur: 3.5 }, // Back-middle, small & blurry
+    { ax: w * 0.56, ay: -h * 0.10, sz: baseScale * 0.8, ph: 4.1, blur: 4.5 }, // Far-back-right, tiny & blurry
   ];
 
   // Helper: draw one hexagonal lantern
@@ -490,6 +490,11 @@ function drawUzbekIslamic(ctx: CanvasRenderingContext2D, w: number, h: number, s
     const swayAng = Math.sin(t * 0.4 + ln.ph) * 0.08 + Math.sin(t * 0.9 + ln.ph) * 0.03;
     const chainLen = h * (0.15 + ln.sz * 0.05);
 
+    // Apply blur for depth of field on smaller background lanterns
+    if (ln.blur > 0) {
+      ctx.filter = `blur(${ln.blur}px)`;
+    }
+
     // Chain (series of short segments to simulate links)
     const chainLinks = Math.floor(chainLen / (8 * ln.sz));
     for (let cl = 0; cl < chainLinks; cl++) {
@@ -506,6 +511,9 @@ function drawUzbekIslamic(ctx: CanvasRenderingContext2D, w: number, h: number, s
     const endX = ln.ax + Math.sin(swayAng * 12) * chainLen * 0.08;
     const endY = ln.ay + chainLen;
     drawLantern(endX, endY, ln.sz, flicker, ln.ph);
+
+    // Reset filter
+    ctx.filter = 'none';
   });
 }
 
