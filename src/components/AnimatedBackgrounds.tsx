@@ -366,13 +366,16 @@ function drawUzbekIslamic(ctx: CanvasRenderingContext2D, w: number, h: number, s
   ctx.restore();
 
   // ════════════════════════════════
-  // 3. LANTERNS — single big top-left, on chain, swaying
+  // 3. LANTERNS — 4 lanterns with perspective
   // ════════════════════════════════
 
-  // Calculate size to be approximately 1/8th of screen width, but at least large enough
-  const baseScale = Math.max(w / 320, h / 450, 1.8);
+  // Calculate base scale
+  const baseScale = Math.max(w / 1000, h / 800, 1.0);
   const lanterns = [
-    { ax: w * 0.18, ay: -h * 0.05, sz: baseScale, ph: 0.0 }, // single big lantern
+    { ax: w * 0.12, ay: -h * 0.02, sz: baseScale * 1.6, ph: 0.0 },   // Front-left, large
+    { ax: w * 0.26, ay: -h * 0.03, sz: baseScale * 1.1, ph: 1.4 },   // Middle, medium
+    { ax: w * 0.38, ay: -h * 0.05, sz: baseScale * 0.7, ph: 2.7 },   // Back-right, small
+    { ax: w * 0.04, ay: -h * 0.04, sz: baseScale * 0.5, ph: 4.1 },   // Far-back-left, tiny
   ];
 
   // Helper: draw one hexagonal lantern
