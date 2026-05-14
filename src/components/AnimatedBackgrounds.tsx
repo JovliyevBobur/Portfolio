@@ -218,137 +218,137 @@ function drawWaves(ctx: CanvasRenderingContext2D, w: number, h: number, state: a
   }
 }
 
-// ─── 9. O'zbek-Islom (Mandala + Lantern glow) ───
+// ─── 9. O'zbek-Islom (Real mandala rotating + 3D lanterns swaying) ───
 function drawUzbekIslamic(ctx: CanvasRenderingContext2D, w: number, h: number, state: any) {
   if (!state.t) state.t = 0;
-  state.t += 0.008;
+  state.t += 0.007;
   const t = state.t;
 
-  // Dark warm background
-  ctx.fillStyle = "rgba(8,6,18,0.13)";
+  // ── Load images once ──
+  if (!state.mandala) {
+    const img = new Image();
+    img.onload = () => { state.mandala = img; };
+    img.src = '/bg/mandala.jpg';
+  }
+  if (!state.lanternImg) {
+    const img = new Image();
+    img.onload = () => { state.lanternImg = img; };
+    img.src = '/bg/lantern.jpg';
+  }
+
+  // ── Dark background (deep warm night) ──
+  ctx.fillStyle = 'rgba(4,3,12,0.18)';
   ctx.fillRect(0, 0, w, h);
 
-  // ── Lantern glow orbs (warm orange-amber like the photo) ──
-  if (!state.lanterns) {
-    state.lanterns = [
-      { x: w * 0.25, y: h * 0.18, phase: 0 },
-      { x: w * 0.55, y: h * 0.12, phase: 1.2 },
-      { x: w * 0.78, y: h * 0.22, phase: 2.4 },
-      { x: w * 0.1, y: h * 0.45, phase: 0.8 },
-      { x: w * 0.9, y: h * 0.38, phase: 1.9 },
+  // ── Ambient warm sky gradient (bottom only) ──
+  const skyGrad = ctx.createLinearGradient(0, h * 0.5, 0, h);
+  skyGrad.addColorStop(0, 'rgba(40,15,5,0)');
+  skyGrad.addColorStop(1, 'rgba(80,30,10,0.25)');
+  ctx.fillStyle = skyGrad;
+  ctx.fillRect(0, h * 0.5, w, h * 0.5);
+
+  // ── Rotating mandala (center, using real image) ──
+  const mSize = Math.min(w, h) * 0.88;
+  const mx = w / 2, my = h / 2;
+  ctx.save();
+  ctx.translate(mx, my);
+  ctx.rotate(t * 0.08); // slow rotation
+  ctx.globalAlpha = 0.55;
+  // Blend mode to make it glow on dark bg
+  ctx.globalCompositeOperation = 'screen';
+  if (state.mandala) {
+    ctx.drawImage(state.mandala, -mSize / 2, -mSize / 2, mSize, mSize);
+  } else {
+    // Fallback: draw placeholder ring while loading
+    ctx.strokeStyle = 'rgba(255,255,255,0.15)';
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.arc(0, 0, mSize / 2, 0, Math.PI * 2);
+    ctx.stroke();
+  }
+  ctx.globalCompositeOperation = 'source-over';
+  ctx.globalAlpha = 1;
+  ctx.restore();
+
+  // ── Lantern data (3D positions: x, depth 0=far 1=near, phase) ──
+  if (!state.ldata) {
+    state.ldata = [
+      // left side lanterns
+      { baseX: w * 0.04, baseY: h * 0.06, depth: 0.55, phase: 0.0,  scaleX: 1 },
+      { baseX: w * 0.14, baseY: h * 0.02, depth: 0.75, phase: 1.3,  scaleX: 1 },
+      { baseX: w * 0.22, baseY: h * 0.10, depth: 0.45, phase: 2.5,  scaleX: 1 },
+      // right side lanterns
+      { baseX: w * 0.96, baseY: h * 0.06, depth: 0.55, phase: 0.6,  scaleX: -1 },
+      { baseX: w * 0.86, baseY: h * 0.02, depth: 0.75, phase: 1.9,  scaleX: -1 },
+      { baseX: w * 0.78, baseY: h * 0.10, depth: 0.45, phase: 3.1,  scaleX: -1 },
     ];
   }
-  state.lanterns.forEach((ln: any) => {
-    const flicker = 0.7 + Math.sin(t * 3.7 + ln.phase) * 0.3 + Math.sin(t * 7.1 + ln.phase) * 0.1;
-    const sway = Math.sin(t * 0.8 + ln.phase) * 6;
-    const gx = ln.x + sway, gy = ln.y + Math.sin(t * 0.5 + ln.phase) * 4;
-    // outer glow
-    const g1 = ctx.createRadialGradient(gx, gy, 0, gx, gy, 80);
-    g1.addColorStop(0, `rgba(255,160,40,${0.12 * flicker})`);
-    g1.addColorStop(0.4, `rgba(220,100,20,${0.07 * flicker})`);
-    g1.addColorStop(1, `rgba(180,60,10,0)`);
-    ctx.fillStyle = g1; ctx.beginPath(); ctx.arc(gx, gy, 80, 0, Math.PI * 2); ctx.fill();
-    // inner core
-    const g2 = ctx.createRadialGradient(gx, gy, 0, gx, gy, 18);
-    g2.addColorStop(0, `rgba(255,230,140,${0.9 * flicker})`);
-    g2.addColorStop(0.5, `rgba(255,160,40,${0.5 * flicker})`);
-    g2.addColorStop(1, `rgba(200,80,10,0)`);
-    ctx.fillStyle = g2; ctx.beginPath(); ctx.arc(gx, gy, 18, 0, Math.PI * 2); ctx.fill();
-  });
 
-  // ── Islamic star pattern tiles ──
-  const drawStar = (cx: number, cy: number, r: number, pts: number, angle: number, colorPrefix: string, alpha: number) => {
+  state.ldata.forEach((ln: any) => {
+    const sway = Math.sin(t * 0.65 + ln.phase) * 12 * ln.depth;   // wind sway
+    const bob  = Math.sin(t * 0.4  + ln.phase + 1) * 4 * ln.depth; // slight up-down
+
+    const lx = ln.baseX + sway;
+    const ly = ln.baseY + bob;
+
+    // 3D scale based on depth
+    const sc   = 0.32 + ln.depth * 0.52;         // 0.32 (far) .. 0.84 (near)
+    const lh   = (state.lanternImg ? 190 : 95) * sc;
+
+    // perspective skew — deeper = less skew
+    const skewAngle = Math.sin(t * 0.65 + ln.phase) * 0.05 * (1 - ln.depth * 0.5);
+
+    // Rope from top anchor to lantern top
+    const ropeLen = 60 * sc;
+    const ropeX   = lx + sway * 0.3;
+    ctx.save();
+    ctx.strokeStyle = `rgba(180,130,60,${0.5 * sc})`;
+    ctx.lineWidth = 1.5 * sc;
     ctx.beginPath();
-    for (let i = 0; i < pts * 2; i++) {
-      const rad = i % 2 === 0 ? r : r * 0.42;
-      const a = (i * Math.PI) / pts + angle;
-      if (i === 0) ctx.moveTo(cx + rad * Math.cos(a), cy + rad * Math.sin(a));
-      else ctx.lineTo(cx + rad * Math.cos(a), cy + rad * Math.sin(a));
-    }
-    ctx.closePath();
-    ctx.strokeStyle = `${colorPrefix},${alpha})`;
-    ctx.lineWidth = 0.8;
+    ctx.moveTo(ln.baseX, 0); // anchor at top edge
+    // Catenary-like curve
+    ctx.quadraticCurveTo(
+      ln.baseX + sway * 0.6, ly - ropeLen * 0.4,
+      lx, ly
+    );
     ctx.stroke();
-  };
+    ctx.restore();
 
-  // Tile the stars across screen
-  const tileSize = Math.min(w, h) * 0.22;
-  const cols = Math.ceil(w / tileSize) + 2;
-  const rows = Math.ceil(h / tileSize) + 2;
-  for (let row = -1; row < rows; row++) {
-    for (let col = -1; col < cols; col++) {
-      const cx = col * tileSize + (row % 2 === 0 ? 0 : tileSize / 2);
-      const cy = row * tileSize * 0.866;
-      const pulse = 0.25 + Math.sin(t * 0.6 + col * 0.4 + row * 0.3) * 0.12;
-      drawStar(cx, cy, tileSize * 0.38, 8, t * 0.15 + col * 0.1, 'rgba(180,140,60', pulse);
-      drawStar(cx, cy, tileSize * 0.22, 6, -t * 0.2 + row * 0.15, 'rgba(60,160,200', pulse * 0.8);
-    }
-  }
+    // Draw lantern image with 3D transform
+    ctx.save();
+    ctx.translate(lx, ly);
+    ctx.transform(1, skewAngle, 0, 1, 0, 0); // shear for sway tilt
+    ctx.scale(sc * ln.scaleX, sc); // mirror for right side
+    ctx.globalAlpha = 0.72 + ln.depth * 0.2;
 
-  // ── Central rotating mandala ──
-  const cx = w / 2, cy = h / 2;
-  const baseR = Math.min(w, h) * 0.28;
-  const colors = [
-    `rgba(210,160,50,`, // gold
-    `rgba(0,180,220,`,  // teal/uzbek blue
-    `rgba(0,160,80,`,   // green (islam)
-    `rgba(180,120,200,`,// purple accent
-  ];
-
-  for (let ring = 0; ring < 6; ring++) {
-    const r = baseR * (0.2 + ring * 0.16);
-    const petals = 8 + ring * 4;
-    const rot = t * (ring % 2 === 0 ? 0.3 : -0.25) + ring * 0.15;
-    const col = colors[ring % colors.length];
-    const alpha = (0.22 - ring * 0.02) * (0.6 + Math.sin(t + ring) * 0.4);
-
-    ctx.beginPath();
-    for (let i = 0; i <= petals * 2; i++) {
-      const a = (i / petals) * Math.PI + rot;
-      const rr = i % 2 === 0 ? r : r * 0.72;
-      if (i === 0) ctx.moveTo(cx + rr * Math.cos(a), cy + rr * Math.sin(a));
-      else ctx.lineTo(cx + rr * Math.cos(a), cy + rr * Math.sin(a));
-    }
-    ctx.closePath();
-    ctx.strokeStyle = `${col}${alpha})`;
-    ctx.lineWidth = 1.2;
-    ctx.stroke();
-
-    // Petal fill for inner rings
-    if (ring < 3) {
-      ctx.fillStyle = `${col}${alpha * 0.25})`;
-      ctx.fill();
-    }
-  }
-
-  // Central dot
-  const cg = ctx.createRadialGradient(cx, cy, 0, cx, cy, baseR * 0.08);
-  cg.addColorStop(0, `rgba(255,210,80,${0.7 + Math.sin(t * 2) * 0.3})`);
-  cg.addColorStop(1, `rgba(255,150,30,0)`);
-  ctx.fillStyle = cg; ctx.beginPath(); ctx.arc(cx, cy, baseR * 0.08, 0, Math.PI * 2); ctx.fill();
-
-  // ── Corner arabesque ornaments ──
-  const corners = [[0, 0], [w, 0], [0, h], [w, h]];
-  corners.forEach(([ox, oy], ci) => {
-    const r2 = Math.min(w, h) * 0.12;
-    const rot2 = t * 0.2 + ci * Math.PI / 2;
-    const alpha2 = 0.15 + Math.sin(t + ci) * 0.06;
-    for (let p = 0; p < 2; p++) {
+    if (state.lanternImg) {
+      // Clip to rounded rect for nice 3D look
       ctx.beginPath();
-      for (let i = 0; i <= 12; i++) {
-        const a = (i / 6) * Math.PI + rot2;
-        const rr = i % 2 === 0 ? r2 * (0.6 + p * 0.4) : r2 * 0.4;
-        const px = ox + rr * Math.cos(a) * (ox === 0 ? 1 : -1);
-        const py = oy + rr * Math.sin(a) * (oy === 0 ? 1 : -1);
-        if (i === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
-      }
-      ctx.closePath();
-      ctx.strokeStyle = `rgba(200,150,40,${alpha2})`;
-      ctx.lineWidth = 0.7;
-      ctx.stroke();
+      const lhalf = 120 / 2;
+      const lhHalf = 190 / 2;
+      ctx.roundRect(-lhalf, -lhHalf, 120, 190, 12);
+      ctx.clip();
+      ctx.drawImage(state.lanternImg, -lhalf, -lhHalf, 120, 190);
     }
+
+    ctx.globalAlpha = 1;
+    ctx.restore();
+
+    // Glow halo under lantern (warm flicker)
+    const flicker = 0.65 + Math.sin(t * 4.2 + ln.phase) * 0.25 + Math.sin(t * 7.8 + ln.phase) * 0.1;
+    const glowR = 90 * sc * flicker;
+    const gx = lx, gy = ly + lh * 0.25;
+    const gGrad = ctx.createRadialGradient(gx, gy, 0, gx, gy, glowR);
+    gGrad.addColorStop(0,   `rgba(255,190,60,${0.28 * flicker * sc})`);
+    gGrad.addColorStop(0.4, `rgba(230,110,20,${0.14 * flicker * sc})`);
+    gGrad.addColorStop(1,   `rgba(180,50,5,0)`);
+    ctx.fillStyle = gGrad;
+    ctx.beginPath();
+    ctx.arc(gx, gy, glowR, 0, Math.PI * 2);
+    ctx.fill();
   });
 }
+
 
 // ─── Master list ───
 export const bgAnimations = [
