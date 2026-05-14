@@ -2,13 +2,10 @@ import { motion } from "framer-motion";
 import { TypeAnimation } from "react-type-animation";
 import { Github, Linkedin, Mail, Instagram, Layout, Database, Smartphone, Code } from "lucide-react";
 import { Button } from "./ui/button";
-import ParticleBackground from "./ParticleBackground";
 import { useTranslation } from "react-i18next";
-import { useBg } from "../contexts/BgContext";
 
 const Hero = () => {
   const { t } = useTranslation();
-  const { activeBgIndex } = useBg();
   
   const socialLinks = [
     { icon: Github, href: "https://github.com/JBoburHacker005", label: "GitHub" },
@@ -20,7 +17,6 @@ const Hero = () => {
   return (
     <>
     <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden py-10">
-      {activeBgIndex === null && <ParticleBackground />}
       
       <div className="container mx-auto px-4 z-10">
         <motion.div

@@ -80,16 +80,6 @@ const Footer = () => {
         <div className="flex flex-col items-center justify-center pt-8 mb-8 border-t border-primary/10">
           <h4 className="text-sm font-medium text-muted-foreground mb-4">Orqa fonni tanlang</h4>
           <div className="flex flex-wrap items-center justify-center gap-3">
-            {/* None option */}
-            <button
-              onClick={() => setActiveBgIndex(null)}
-              className="relative w-12 h-12 rounded-lg bg-[#1a1e2e] border-2 transition-all duration-300 flex items-center justify-center overflow-hidden hover:scale-110"
-              style={{ borderColor: activeBgIndex === null ? 'hsl(189,94%,60%)' : 'rgba(255,255,255,0.1)' }}
-              aria-label="No background"
-            >
-              {activeBgIndex === null && <Check className="w-5 h-5 text-primary drop-shadow-md z-10" />}
-            </button>
-            
             {/* Animation options */}
             {bgAnimations.map((anim, idx) => (
               <button
