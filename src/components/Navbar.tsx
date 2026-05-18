@@ -1,4 +1,7 @@
-import { Link, useLocation } from "react-router-dom";
+"use client";
+
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
 import { Clock, CloudSun, Calendar, Wind } from "lucide-react";
 import { Button } from "./ui/button";
@@ -9,7 +12,7 @@ const Navbar = () => {
   const [time, setTime] = useState<string>("");
   const [dateStr, setDateStr] = useState<string>("");
   const [weather, setWeather] = useState<{ temp: number | null; wind: number | null }>({ temp: null, wind: null });
-  const location = useLocation();
+  const pathname = usePathname();
 
   useEffect(() => {
     const updateClockAndDate = () => {
@@ -101,7 +104,7 @@ const Navbar = () => {
       <div className="bg-background/80 backdrop-blur-md border-b border-white/5 shadow-sm transition-all duration-300">
         <div className="container mx-auto px-4 lg:px-8 py-3 flex items-center justify-between">
           
-          <Link to="/" className="flex items-center gap-3 group">
+          <Link href="/" className="flex items-center gap-3 group">
             <div className="p-1 bg-black rounded-lg border border-primary/20 transition-all duration-300">
               <img src="/brand-logo.png" alt="JBN Logo" className="w-8 h-8 md:w-10 md:h-10 transition-transform duration-300 group-hover:scale-110" />
             </div>
@@ -112,11 +115,11 @@ const Navbar = () => {
 
           <nav className="hidden lg:flex items-center gap-4 xl:gap-6">
             {navLinks.map((link) => {
-              const isActive = location.pathname === link.href || (location.pathname === '/' && link.href === '/') && location.pathname === link.href;
+              const isActive = pathname === link.href;
               return (
                 <Link
                   key={link.name}
-                  to={link.href}
+                  href={link.href}
                   className={`text-base font-bold transition-all duration-300 py-2 px-3 rounded-[10px] ${
                     isActive
                       ? "text-white bg-white/10 shadow-[0_4px_10px_-2px_rgba(168,85,247,0.3)] border-b-2 border-purple-500"

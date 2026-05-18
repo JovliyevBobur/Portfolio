@@ -1,8 +1,11 @@
+"use client";
+
 import { motion } from "framer-motion";
 import { TypeAnimation } from "react-type-animation";
 import { Github, Linkedin, Mail, Instagram, Layout, Database, Smartphone, Code } from "lucide-react";
 import { Button } from "./ui/button";
 import { useTranslation } from "react-i18next";
+import Link from "next/link";
 
 const Hero = () => {
   const { t } = useTranslation();
@@ -130,14 +133,14 @@ const Hero = () => {
             transition={{ delay: 0.8, duration: 0.6 }}
             className="flex flex-wrap gap-4 justify-center mb-16"
           >
-            <a href="/projects">
+            <Link href="/projects">
               <Button
                 size="lg"
                 className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold px-8 py-6 text-lg glow-primary transition-all duration-300 hover:scale-105"
               >
                 {t('Hero.ViewWork')}
               </Button>
-            </a>
+            </Link>
             <a href="tel:+998930054287">
               <Button
                 size="lg"

@@ -1,4 +1,6 @@
-import React, { createContext, useContext, useState, ReactNode } from "react";
+"use client";
+
+import React, { createContext, useContext, useState, useEffect, ReactNode } from "react";
 import { bgAnimations } from "../components/AnimatedBackgrounds";
 
 export const bgCount = bgAnimations.length;
@@ -10,19 +12,20 @@ interface BgContextType {
 
 const BgContext = createContext<BgContextType | undefined>(undefined);
 
-function getInitialBg(): number {
-  try {
-    const saved = localStorage.getItem("activeBgIndex");
-    if (saved !== null) {
-      const parsed = parseInt(saved, 10);
-      if (!isNaN(parsed) && parsed >= 0 && parsed < bgAnimations.length) return parsed;
-    }
-  } catch {}
-  return 0;
-}
-
 export const BgProvider = ({ children }: { children: ReactNode }) => {
-  const [activeBgIndex, setActiveBgIndexState] = useState<number>(getInitialBg);
+  const [activeBgIndex, setActiveBgIndexState] = useState<number>(0);
+
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem("activeBgIndex");
+      if (saved !== null) {
+        const parsed = parseInt(saved, 10);
+        if (!isNaN(parsed) && parsed >= 0 && parsed < bgAnimations.length) {
+          setActiveBgIndexState(parsed);
+        }
+      }
+    } catch {}
+  }, []);
 
   const setActiveBgIndex = (index: number) => {
     setActiveBgIndexState(index);

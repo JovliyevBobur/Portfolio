@@ -1,3 +1,5 @@
+"use client";
+
 import { Github, Linkedin, Instagram, Send, Heart, Check } from "lucide-react";
 import { useBg, bgCount } from "../contexts/BgContext";
 import { bgAnimations, AnimatedBgThumb } from "./AnimatedBackgrounds";

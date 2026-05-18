@@ -1,3 +1,5 @@
+"use client";
+
 import { motion, useInView } from "framer-motion";
 import { useRef, useState, useEffect } from "react";
 import { Mail, Phone, Github, Linkedin, Instagram, Send, MapPin, Sparkles, ArrowRight } from "lucide-react";
@@ -25,8 +27,8 @@ const Contact = () => {
     e.preventDefault();
     setIsSubmitting(true);
 
-    const botToken = import.meta.env.VITE_TELEGRAM_BOT_TOKEN;
-    const chatId = import.meta.env.VITE_TELEGRAM_CHAT_ID;
+    const botToken = process.env.NEXT_PUBLIC_TELEGRAM_BOT_TOKEN;
+    const chatId = process.env.NEXT_PUBLIC_TELEGRAM_CHAT_ID;
 
     if (!botToken || !chatId) {
       toast({

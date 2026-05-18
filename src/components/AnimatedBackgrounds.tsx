@@ -1,3 +1,5 @@
+"use client";
+
 import { useEffect, useRef, useCallback } from "react";
 
 // ─── 1. Falling Rain / Matrix Rain ───

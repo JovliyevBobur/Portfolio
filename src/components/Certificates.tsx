@@ -1,3 +1,5 @@
+"use client";
+
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import { Award, Badge, Medal, ExternalLink, Sparkles } from "lucide-react";
