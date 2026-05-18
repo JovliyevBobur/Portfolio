@@ -20,7 +20,7 @@ function drawRain(ctx: CanvasRenderingContext2D, w: number, h: number, state: an
   state.frameCount++;
 
   // Fade background slightly on every frame to create trails
-  ctx.fillStyle = "rgba(2, 6, 15, 0.1)";
+  ctx.fillStyle = "rgba(2, 6, 15, 0.03)";
   ctx.fillRect(0, 0, w, h);
 
   // Update position less frequently for the discrete "matrix" feel
@@ -70,6 +70,56 @@ function drawNebula(ctx: CanvasRenderingContext2D, w: number, h: number, state: 
     ctx.fillStyle = g;
     ctx.fillRect(0, 0, w, h);
   }
+  
+  // Floating classic orbs / network particles
+  if (!state.orbs) {
+    state.orbs = Array.from({ length: 45 }, () => ({
+      x: Math.random() * w, y: Math.random() * h, 
+      r: Math.random() * 2 + 1,
+      vx: (Math.random() - 0.5) * 0.8, vy: (Math.random() - 0.5) * 0.8,
+    }));
+  }
+  
+  // Draw connecting lines
+  ctx.lineWidth = 0.6;
+  for (let i = 0; i < state.orbs.length; i++) {
+    for (let j = i + 1; j < state.orbs.length; j++) {
+      const dx = state.orbs[i].x - state.orbs[j].x;
+      const dy = state.orbs[i].y - state.orbs[j].y;
+      const dist = Math.sqrt(dx * dx + dy * dy);
+      if (dist < 140) {
+        ctx.beginPath();
+        ctx.moveTo(state.orbs[i].x, state.orbs[i].y);
+        ctx.lineTo(state.orbs[j].x, state.orbs[j].y);
+        ctx.strokeStyle = `rgba(180, 220, 255, ${0.25 * (1 - dist / 140)})`;
+        ctx.stroke();
+      }
+    }
+  }
+
+  // Draw orbs
+  state.orbs.forEach((o: any) => {
+    ctx.beginPath();
+    ctx.arc(o.x, o.y, o.r, 0, Math.PI * 2);
+    ctx.fillStyle = `rgba(220, 240, 255, 0.7)`;
+    ctx.fill();
+    
+    // Core glow
+    ctx.beginPath();
+    ctx.arc(o.x, o.y, o.r * 3, 0, Math.PI * 2);
+    const glow = ctx.createRadialGradient(o.x, o.y, 0, o.x, o.y, o.r * 3);
+    glow.addColorStop(0, `rgba(180, 220, 255, 0.4)`);
+    glow.addColorStop(1, `rgba(180, 220, 255, 0)`);
+    ctx.fillStyle = glow;
+    ctx.fill();
+
+    o.x += o.vx;
+    o.y += o.vy;
+    
+    if (o.x < 0 || o.x > w) o.vx *= -1;
+    if (o.y < 0 || o.y > h) o.vy *= -1;
+  });
+
   // stars
   if (!state.stars) state.stars = Array.from({ length: 100 }, () => ({
     x: Math.random() * w, y: Math.random() * h, s: Math.random() * 1.5, p: Math.random() * Math.PI * 2,
@@ -173,26 +223,6 @@ function drawBubbles(ctx: CanvasRenderingContext2D, w: number, h: number, state:
   });
 }
 
-// ─── 8. Waveform / Sound Waves ───
-function drawWaves(ctx: CanvasRenderingContext2D, w: number, h: number, state: any) {
-  if (!state.t) state.t = 0;
-  state.t += 0.015;
-  ctx.fillStyle = "rgba(8,10,25,0.12)";
-  ctx.fillRect(0, 0, w, h);
-  for (let wave = 0; wave < 5; wave++) {
-    ctx.beginPath();
-    const cy = h / 2;
-    for (let x = 0; x <= w; x += 3) {
-      const y = cy + Math.sin(x * 0.008 + state.t * (1.5 + wave * 0.2) + wave * 0.8) * (30 + wave * 15)
-        + Math.sin(x * 0.015 + state.t) * 10;
-      if (x === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
-    }
-    const hue = 180 + wave * 25;
-    ctx.strokeStyle = `hsla(${hue},80%,55%,${0.15 - wave * 0.02})`;
-    ctx.lineWidth = 2; ctx.stroke();
-  }
-}
-
 // ─── Master list ───
 export const bgAnimations = [
   { name: "Yomg'ir", draw: drawRain, color: "#0af" },
@@ -200,8 +230,8 @@ export const bgAnimations = [
   { name: "Yulduzlar", draw: drawComets, color: "#38bdf8" },
   { name: "Grid", draw: drawGrid, color: "#06b6d4" },
   { name: "Pufaklar", draw: drawBubbles, color: "#8b5cf6" },
-  { name: "To'lqinlar", draw: drawWaves, color: "#14b8a6" },
 ];
+
 
 // ─── Canvas Component ───
 export function AnimatedBg({ index }: { index: number }) {
