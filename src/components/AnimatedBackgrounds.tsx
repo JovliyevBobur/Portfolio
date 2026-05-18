@@ -11,9 +11,9 @@ function drawRain(ctx: CanvasRenderingContext2D, w: number, h: number, state: an
   if (!state.initialized || state.columns !== cols) {
     const oldDrops = state.drops || [];
     state.columns = cols;
-    state.drops = Array.from({ length: cols }, (_, i) => 
+    state.drops = Array.from({ length: cols }, (_, i) =>
       i < oldDrops.length ? oldDrops[i] : Math.random() * -100
-    ); 
+    );
     state.chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789アァカサタナハマヤャラワガザダバパイィキシチニヒミリヰギジヂビピウゥクスツヌフムユュルグズブヅプエェケセテネヘメレゲゼデベペオォコソトノホモヨョロゴゾドボポヴッン";
     state.frameCount = 0;
     state.initialized = true;
@@ -22,17 +22,17 @@ function drawRain(ctx: CanvasRenderingContext2D, w: number, h: number, state: an
   state.frameCount++;
 
   // Fade background slightly on every frame to create trails
-  ctx.fillStyle = "rgba(2, 6, 15, 0.03)";
+  ctx.fillStyle = "rgba(15, 23, 42, 0.035)";
   ctx.fillRect(0, 0, w, h);
 
   // Update position less frequently for the discrete "matrix" feel
   if (state.frameCount % 2 === 0) {
     ctx.font = `${fontSize}px monospace`;
     ctx.textAlign = "center";
-    
+
     for (let i = 0; i < state.drops.length; i++) {
       const char = state.chars[Math.floor(Math.random() * state.chars.length)];
-      
+
       const x = i * fontSize + fontSize / 2;
       const y = state.drops[i] * fontSize;
 
@@ -42,7 +42,7 @@ function drawRain(ctx: CanvasRenderingContext2D, w: number, h: number, state: an
       } else {
         ctx.fillStyle = "#0284c7"; // Deep blue like the image
       }
-      
+
       ctx.fillText(char, x, y);
 
       // Reset drop to top randomly when it crosses screen
@@ -59,7 +59,7 @@ function drawRain(ctx: CanvasRenderingContext2D, w: number, h: number, state: an
 function drawNebula(ctx: CanvasRenderingContext2D, w: number, h: number, state: any) {
   if (!state.t) state.t = 0;
   state.t += 0.003;
-  ctx.fillStyle = "rgba(5,5,15,0.08)";
+  ctx.fillStyle = "rgba(15, 23, 42, 0.09)";
   ctx.fillRect(0, 0, w, h);
   for (let i = 0; i < 5; i++) {
     const cx = w * 0.5 + Math.sin(state.t + i * 1.3) * w * 0.3;
@@ -72,16 +72,16 @@ function drawNebula(ctx: CanvasRenderingContext2D, w: number, h: number, state: 
     ctx.fillStyle = g;
     ctx.fillRect(0, 0, w, h);
   }
-  
+
   // Floating classic orbs / network particles
   if (!state.orbs) {
     state.orbs = Array.from({ length: 45 }, () => ({
-      x: Math.random() * w, y: Math.random() * h, 
+      x: Math.random() * w, y: Math.random() * h,
       r: Math.random() * 2 + 1,
       vx: (Math.random() - 0.5) * 0.8, vy: (Math.random() - 0.5) * 0.8,
     }));
   }
-  
+
   // Draw connecting lines
   ctx.lineWidth = 0.6;
   for (let i = 0; i < state.orbs.length; i++) {
@@ -105,7 +105,7 @@ function drawNebula(ctx: CanvasRenderingContext2D, w: number, h: number, state: 
     ctx.arc(o.x, o.y, o.r, 0, Math.PI * 2);
     ctx.fillStyle = `rgba(220, 240, 255, 0.7)`;
     ctx.fill();
-    
+
     // Core glow
     ctx.beginPath();
     ctx.arc(o.x, o.y, o.r * 3, 0, Math.PI * 2);
@@ -117,7 +117,7 @@ function drawNebula(ctx: CanvasRenderingContext2D, w: number, h: number, state: 
 
     o.x += o.vx;
     o.y += o.vy;
-    
+
     if (o.x < 0 || o.x > w) o.vx *= -1;
     if (o.y < 0 || o.y > h) o.vy *= -1;
   });
@@ -144,7 +144,7 @@ function drawComets(ctx: CanvasRenderingContext2D, w: number, h: number, state: 
     state.t = 0;
   }
   state.t += 0.01;
-  ctx.fillStyle = "rgba(5,5,18,0.12)";
+  ctx.fillStyle = "rgba(15, 23, 42, 0.13)";
   ctx.fillRect(0, 0, w, h);
   state.stars.forEach((s: any) => {
     ctx.beginPath(); ctx.arc(s.x, s.y, s.s, 0, Math.PI * 2);
@@ -171,7 +171,7 @@ function newComet(w: number, h: number) {
 function drawGrid(ctx: CanvasRenderingContext2D, w: number, h: number, state: any) {
   if (!state.t) state.t = 0;
   state.t += 0.01;
-  ctx.fillStyle = "rgba(5,10,15,0.15)";
+  ctx.fillStyle = "rgba(15, 23, 42, 0.16)";
   ctx.fillRect(0, 0, w, h);
   const spacing = 50;
   const alpha = 0.08 + Math.sin(state.t) * 0.03;
@@ -211,7 +211,7 @@ function drawBubbles(ctx: CanvasRenderingContext2D, w: number, h: number, state:
       hue: 180 + Math.random() * 60,
     }));
   }
-  ctx.fillStyle = "rgba(8,12,22,0.1)";
+  ctx.fillStyle = "rgba(15, 23, 42, 0.11)";
   ctx.fillRect(0, 0, w, h);
   state.bubbles.forEach((b: any) => {
     ctx.beginPath(); ctx.arc(b.x, b.y, b.r, 0, Math.PI * 2);
@@ -226,24 +226,37 @@ function drawBubbles(ctx: CanvasRenderingContext2D, w: number, h: number, state:
 }
 
 // ─── Master list ───
-export const bgAnimations = [
-  { name: "Yomg'ir", draw: drawRain, color: "#0af" },
-  { name: "Tumanlik", draw: drawNebula, color: "#6366f1" },
-  { name: "Yulduzlar", draw: drawComets, color: "#38bdf8" },
-  { name: "Grid", draw: drawGrid, color: "#06b6d4" },
-  { name: "Pufaklar", draw: drawBubbles, color: "#8b5cf6" },
+export interface BgAnimationType {
+  name: string;
+  type: "canvas" | "video";
+  draw?: (ctx: CanvasRenderingContext2D, w: number, h: number, state: any) => void;
+  videoSrc?: string;
+  color: string;
+}
+
+export const bgAnimations: BgAnimationType[] = [
+  { name: "Yomg'ir", type: "canvas", draw: drawRain, color: "#0af" },
+  { name: "Kosmos Oqimi", type: "video", videoSrc: "/bg/133268-756249042.mp4", color: "#ec4899" },
+  { name: "Tumanlik", type: "canvas", draw: drawNebula, color: "#6366f1" },
+  { name: "Kiber Tarmoq", type: "video", videoSrc: "/bg/202963-919289028.mp4", color: "#3b82f6" },
+  { name: "Yulduzlar", type: "canvas", draw: drawComets, color: "#38bdf8" },
+  { name: "Abstrakt To'lqin", type: "video", videoSrc: "/bg/202965-919289035.mp4", color: "#10b981" },
+  { name: "Grid", type: "canvas", draw: drawGrid, color: "#06b6d4" },
+  { name: "Raqamli Oqim", type: "video", videoSrc: "/bg/205172-926480911.mp4", color: "#f59e0b" },
+  { name: "Pufaklar", type: "canvas", draw: drawBubbles, color: "#8b5cf6" },
 ];
 
 
-// ─── Canvas Component ───
+// ─── Master Background Component ───
 export function AnimatedBg({ index }: { index: number }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const stateRef = useRef<any>({});
   const rafRef = useRef<number>(0);
 
-  const anim = bgAnimations[index];
+  const anim = bgAnimations[index] || bgAnimations[0];
 
   const loop = useCallback(() => {
+    if (anim.type !== "canvas" || !anim.draw) return;
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext("2d");
@@ -253,27 +266,61 @@ export function AnimatedBg({ index }: { index: number }) {
   }, [anim]);
 
   useEffect(() => {
+    if (anim.type !== "canvas") return;
     const canvas = canvasRef.current;
     if (!canvas) return;
-    const resize = () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; stateRef.current = {}; };
+    const resize = () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      stateRef.current = {};
+    };
     resize();
     window.addEventListener("resize", resize);
     rafRef.current = requestAnimationFrame(loop);
-    return () => { cancelAnimationFrame(rafRef.current); window.removeEventListener("resize", resize); };
-  }, [loop]);
+    return () => {
+      cancelAnimationFrame(rafRef.current);
+      window.removeEventListener("resize", resize);
+    };
+  }, [loop, anim.type]);
+
+  if (anim.type === "video") {
+    const isBrightBg = index === 1 || index === 5 || index === 7;
+    return (
+      <div className="fixed inset-0 w-full h-full overflow-hidden pointer-events-none z-0">
+        <video
+          key={anim.videoSrc}
+          src={anim.videoSrc}
+          autoPlay
+          loop
+          muted
+          playsInline
+          className={`w-full h-full object-cover transition-opacity duration-1000 ${isBrightBg ? "opacity-45" : "opacity-55"
+            }`}
+        />
+        {/* Adaptive overlay: higher dimming and blur for bright backgrounds to ensure text readability */}
+        <div
+          className={`absolute inset-0 transition-all duration-1000 ${isBrightBg
+              ? "bg-black/60 backdrop-blur-[1.5px]"
+              : "bg-background/10 backdrop-blur-[0.5px]"
+            }`}
+        />
+      </div>
+    );
+  }
 
   return <canvas ref={canvasRef} className="fixed inset-0 w-full h-full pointer-events-none z-0" />;
 }
 
-// ─── Thumbnail preview (small canvas for footer selector) ───
+// ─── Thumbnail preview (small canvas/video for footer selector) ───
 export function AnimatedBgThumb({ index, size = 40 }: { index: number; size?: number }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const stateRef = useRef<any>({});
   const rafRef = useRef<number>(0);
 
-  const anim = bgAnimations[index];
+  const anim = bgAnimations[index] || bgAnimations[0];
 
   useEffect(() => {
+    if (anim.type !== "canvas" || !anim.draw) return;
     const canvas = canvasRef.current;
     if (!canvas) return;
     canvas.width = size * 2;
@@ -283,12 +330,35 @@ export function AnimatedBgThumb({ index, size = 40 }: { index: number; size?: nu
     const loop = () => {
       const ctx = canvas.getContext("2d");
       if (!ctx) return;
-      anim.draw(ctx, canvas.width, canvas.height, stateRef.current);
+      anim.draw!(ctx, canvas.width, canvas.height, stateRef.current);
       rafRef.current = requestAnimationFrame(loop);
     };
     rafRef.current = requestAnimationFrame(loop);
     return () => cancelAnimationFrame(rafRef.current);
   }, [anim, size]);
+
+  if (anim.type === "video") {
+    return (
+      <div
+        style={{ width: size, height: size }}
+        className="absolute inset-0 rounded-lg overflow-hidden flex items-center justify-center bg-black/50"
+      >
+        <video
+          src={anim.videoSrc}
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="w-full h-full object-cover scale-125"
+        />
+        {/* A tiny color mask in the thumbnail representing the theme */}
+        <div
+          className="absolute inset-0 opacity-15"
+          style={{ backgroundColor: anim.color }}
+        />
+      </div>
+    );
+  }
 
   return (
     <canvas

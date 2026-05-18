@@ -27,6 +27,17 @@ export const BgProvider = ({ children }: { children: ReactNode }) => {
     } catch {}
   }, []);
 
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    // 2-6-8 in 1-based index is 1, 5, 7 in 0-based index
+    const isBrightBg = activeBgIndex === 1 || activeBgIndex === 5 || activeBgIndex === 7;
+    if (isBrightBg) {
+      document.documentElement.classList.add("theme-bright-bg");
+    } else {
+      document.documentElement.classList.remove("theme-bright-bg");
+    }
+  }, [activeBgIndex]);
+
   const setActiveBgIndex = (index: number) => {
     setActiveBgIndexState(index);
     try { localStorage.setItem("activeBgIndex", String(index)); } catch {}
