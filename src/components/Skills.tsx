@@ -1,44 +1,53 @@
 import { motion, useInView } from "framer-motion";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { 
   Terminal, FileCode2, Code2, Server, Atom, Box, 
   Database, Cloud, Laptop, Monitor, Container,
   Braces, Cpu, Globe, Rocket, Shield, PenTool
 } from "lucide-react";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 
 const Skills = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, amount: 0.1 });
+  
+  const [selectedSkill, setSelectedSkill] = useState<any>(null);
 
   const skillCategories = [
     {
       title: "Backend Development",
       icon: Server,
       skills: [
-        { name: "Python / Django / Fast API", icon: Terminal, level: "95%" },
-        { name: "Node.js / Express", icon: Box, level: "90%" },
-        { name: "Java / Spring Boot", icon: Code2, level: "85%" },
-        { name: "PHP / Laravel", icon: Server, level: "80%" },
+        { name: "Python / Django / Fast API", icon: Terminal, level: "95%", description: "Python va uning ilg'or freymvorklari yordamida yuqori yuklamali, xavfsiz va tezkor backend tizimlarini yaratish. RESTful API va GraphQL arxitekturalarini ishlab chiqish tajribasi." },
+        { name: "Node.js / Express", icon: Box, level: "90%", description: "Asinxron va real vaqtda ishlovchi ilovalarni Node.js va Express yordamida tezkor qurish. WebSockets orqali jonli aloqani ta'minlash." },
+        { name: "Java / Spring Boot", icon: Code2, level: "85%", description: "Yirik korporativ darajadagi (Enterprise) loyihalar uchun Java Spring Boot orqali ishonchli va mikroxizmat arxitekturasiga asoslangan yechimlar yaratish." },
+        { name: "PHP / Laravel", icon: Server, level: "80%", description: "Laravel freymvorkida zamonaviy MVC arxitekturasida dasturlar yaratish, Eloquent ORM yordamida ma'lumotlar bazasi bilan samarali ishlash." },
       ]
     },
     {
       title: "Frontend Development",
       icon: Laptop,
       skills: [
-        { name: "React / Next.js", icon: Atom, level: "95%" },
-        { name: "TypeScript", icon: Braces, level: "90%" },
-        { name: "Tailwind CSS", icon: PenTool, level: "98%" },
-        { name: "Vue.js", icon: Globe, level: "75%" },
+        { name: "React / Next.js", icon: Atom, level: "95%", description: "Foydalanuvchilar uchun qulay, interaktiv va SSR/SSG qo'llab-quvvatlovchi zamonaviy web interfeyslarni React va Next.js orqali yaratish." },
+        { name: "TypeScript", icon: Braces, level: "90%", description: "Katta miqyosdagi loyihalarda xatolarni oldini olish va kod sifatini oshirish uchun qat'iy tiplangan TypeScript dasturlash tilidan samarali foydalanish." },
+        { name: "Tailwind CSS", icon: PenTool, level: "98%", description: "Zamonaviy, moslashuvchan (responsive) va chiroyli dizaynlarni Tailwind CSS utility-first yondashuvi yordamida tezkorlik bilan ishlab chiqish." },
+        { name: "Vue.js", icon: Globe, level: "75%", description: "Tezkor va yengil frontend ilovalarini Vue.js freymvorki yordamida qurish va uning ekotizimidan foydalanish." },
       ]
     },
     {
       title: "DevOps & Tools",
       icon: Cpu,
       skills: [
-        { name: "Docker / Kubernetes", icon: Container, level: "85%" },
-        { name: "Linux / Bash", icon: Terminal, level: "90%" },
-        { name: "Git / CI/CD", icon: Rocket, level: "95%" },
-        { name: "PostgreSQL / MongoDB", icon: Database, level: "92%" },
+        { name: "Docker / Kubernetes", icon: Container, level: "85%", description: "Ilovalarni konteynerlashtirish (Docker) va ularni klasterlarda avtomatik boshqarish (Kubernetes) orqali yuqori mavjudlikni ta'minlash." },
+        { name: "Linux / Bash", icon: Terminal, level: "90%", description: "Linux serverlarini sozlash, boshqarish va Bash skriptlari yordamida jarayonlarni avtomatlashtirish bo'yicha chuqur bilimlar." },
+        { name: "Git / CI/CD", icon: Rocket, level: "95%", description: "Jamoaviy ishlashda Git versiya nazorati va GitHub Actions/GitLab CI orqali kodni avtomatik test qilish va serverga yuklash (CI/CD) jarayonlarini yo'lga qo'yish." },
+        { name: "PostgreSQL / MongoDB", icon: Database, level: "92%", description: "Relyatsion (PostgreSQL) va NoSQL (MongoDB) ma'lumotlar bazalarini loyihalash, optimizatsiya qilish va murakkab so'rovlarni yozish malakasi." },
       ]
     }
   ];
@@ -85,11 +94,13 @@ const Skills = () => {
                 {category.skills.map((skill, skillIndex) => (
                   <motion.div
                     key={skill.name}
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    animate={isInView ? { opacity: 1, scale: 1 } : {}}
-                    transition={{ duration: 0.5, delay: catIndex * 0.2 + skillIndex * 0.1 }}
-                    whileHover={{ y: -5 }}
-                    className="glass p-6 rounded-2xl border border-primary/10 hover:border-primary/40 hover:shadow-[0_0_30px_rgba(6,182,212,0.15)] transition-all group relative overflow-hidden"
+                    initial={{ opacity: 0, scale: 0.8, y: 20 }}
+                    animate={isInView ? { opacity: 1, scale: 1, y: 0 } : {}}
+                    transition={{ duration: 0.5, delay: catIndex * 0.2 + skillIndex * 0.1, type: "spring", stiffness: 100 }}
+                    whileHover={{ y: -8, scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    onClick={() => setSelectedSkill(skill)}
+                    className="glass p-6 rounded-2xl border border-primary/20 hover:border-primary/60 hover:shadow-[0_0_40px_rgba(6,182,212,0.25)] transition-all duration-300 group relative overflow-hidden cursor-pointer backdrop-blur-xl bg-black/40"
                   >
                     <div className="flex items-start justify-between mb-4">
                       <div className="p-3 rounded-xl bg-background/50 border border-white/5 group-hover:bg-primary group-hover:text-black transition-all duration-300">
@@ -116,6 +127,28 @@ const Skills = () => {
           ))}
         </div>
       </div>
+
+      <Dialog open={!!selectedSkill} onOpenChange={(open) => !open && setSelectedSkill(null)}>
+        <DialogContent className="glass border-primary/20 bg-black/60 backdrop-blur-3xl text-white sm:max-w-md">
+          <DialogHeader>
+            <div className="flex items-center gap-4 mb-4 mt-2">
+              <div className="p-4 rounded-2xl bg-primary/20 border border-primary/30 text-primary shadow-[0_0_30px_rgba(6,182,212,0.3)]">
+                {selectedSkill?.icon && <selectedSkill.icon className="w-8 h-8" />}
+              </div>
+              <div>
+                <DialogTitle className="text-2xl font-bold tracking-tight">{selectedSkill?.name}</DialogTitle>
+                <div className="text-sm font-bold text-primary mt-1 opacity-90">
+                  O'zlashtirish darajasi: {selectedSkill?.level}
+                </div>
+              </div>
+            </div>
+            <DialogDescription className="text-base text-gray-300 leading-relaxed mt-4 text-left">
+              {selectedSkill?.description}
+            </DialogDescription>
+          </DialogHeader>
+        </DialogContent>
+      </Dialog>
+
     </section>
   );
 };
