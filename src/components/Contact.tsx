@@ -76,7 +76,7 @@ const Contact = () => {
   const contactLinks = [
     { icon: Mail, label: "Email", value: "jbobur005@gmail.com", href: "mailto:jbobur005@gmail.com", color: "text-red-400" },
     { icon: Phone, label: "Telefon", value: "+998 93 005 42 87", href: "tel:+998930054287", color: "text-green-400" },
-    { icon: MapPin, label: "Manzil", value: "Qashqadaryo, Qamashi", href: "https://maps.google.com", color: "text-amber-400" },
+    { icon: Send, label: "Telegram", value: "@Jovliyev_Bobur", href: "https://t.me/Jovliyev_Bobur", color: "text-blue-400" },
     { icon: Github, label: "GitHub", value: "JBoburHacker005", href: "https://github.com/JBoburHacker005", color: "text-gray-200" },
     { icon: Linkedin, label: "LinkedIn", value: "Bobur005", href: "https://linkedin.com/in/Bobur005", color: "text-blue-500" },
     { icon: Instagram, label: "Instagram", value: "@j.bobur005", href: "https://instagram.com/j.bobur005", color: "text-pink-500" },
@@ -210,7 +210,7 @@ const Contact = () => {
                 ) : (
                   <>
                     Xabarni Yuborish 
-                    <ArrowRight className="w-5 h-5 group-hover:translate-x-2 transition-transform" />
+                    <Send className="w-5 h-5 group-hover:translate-x-2 group-hover:-translate-y-1 transition-transform" />
                   </>
                 )}
               </Button>
