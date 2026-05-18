@@ -2,25 +2,55 @@ import { useEffect, useRef, useCallback } from "react";
 
 // ─── 1. Falling Rain / Matrix Rain ───
 function drawRain(ctx: CanvasRenderingContext2D, w: number, h: number, state: any) {
-  if (!state.drops) {
-    state.drops = Array.from({ length: 80 }, () => ({
-      x: Math.random() * w, y: Math.random() * h,
-      speed: 1 + Math.random() * 3, len: 10 + Math.random() * 20,
-      alpha: 0.3 + Math.random() * 0.5,
-    }));
+  const isThumb = w < 200;
+  const fontSize = isThumb ? 12 : 20;
+  const cols = Math.floor(w / fontSize);
+
+  if (!state.initialized || state.columns !== cols) {
+    const oldDrops = state.drops || [];
+    state.columns = cols;
+    state.drops = Array.from({ length: cols }, (_, i) => 
+      i < oldDrops.length ? oldDrops[i] : Math.random() * -100
+    ); 
+    state.chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789アァカサタナハマヤャラワガザダバパイィキシチニヒミリヰギジヂビピウゥクスツヌフムユュルグズブヅプエェケセテネヘメレゲゼデベペオォコソトノホモヨョロゴゾドボポヴッン";
+    state.frameCount = 0;
+    state.initialized = true;
   }
-  ctx.fillStyle = "rgba(10,14,20,0.15)";
+
+  state.frameCount++;
+
+  // Fade background slightly on every frame to create trails
+  ctx.fillStyle = "rgba(2, 6, 15, 0.1)";
   ctx.fillRect(0, 0, w, h);
-  state.drops.forEach((d: any) => {
-    ctx.beginPath();
-    ctx.moveTo(d.x, d.y);
-    ctx.lineTo(d.x, d.y + d.len);
-    ctx.strokeStyle = `rgba(56,200,248,${d.alpha})`;
-    ctx.lineWidth = 1;
-    ctx.stroke();
-    d.y += d.speed;
-    if (d.y > h) { d.y = -d.len; d.x = Math.random() * w; }
-  });
+
+  // Update position less frequently for the discrete "matrix" feel
+  if (state.frameCount % 2 === 0) {
+    ctx.font = `${fontSize}px monospace`;
+    ctx.textAlign = "center";
+    
+    for (let i = 0; i < state.drops.length; i++) {
+      const char = state.chars[Math.floor(Math.random() * state.chars.length)];
+      
+      const x = i * fontSize + fontSize / 2;
+      const y = state.drops[i] * fontSize;
+
+      // Draw the character
+      if (Math.random() > 0.85) {
+        ctx.fillStyle = "#bae6fd"; // Bright cyan for some heads
+      } else {
+        ctx.fillStyle = "#0284c7"; // Deep blue like the image
+      }
+      
+      ctx.fillText(char, x, y);
+
+      // Reset drop to top randomly when it crosses screen
+      if (y > h && Math.random() > 0.975) {
+        state.drops[i] = 0;
+      } else {
+        state.drops[i]++;
+      }
+    }
+  }
 }
 
 // ─── 2. Nebula / Galaxy Clouds ───
