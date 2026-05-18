@@ -11,9 +11,9 @@ function drawRain(ctx: CanvasRenderingContext2D, w: number, h: number, state: an
   if (!state.initialized || state.columns !== cols) {
     const oldDrops = state.drops || [];
     state.columns = cols;
-    state.drops = Array.from({ length: cols }, (_, i) =>
+    state.drops = Array.from({ length: cols }, (_, i) => 
       i < oldDrops.length ? oldDrops[i] : Math.random() * -100
-    );
+    ); 
     state.chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789アァカサタナハマヤャラワガザダバパイィキシチニヒミリヰギジヂビピウゥクスツヌフムユュルグズブヅプエェケセテネヘメレゲゼデベペオォコソトノホモヨョロゴゾドボポヴッン";
     state.frameCount = 0;
     state.initialized = true;
@@ -29,10 +29,10 @@ function drawRain(ctx: CanvasRenderingContext2D, w: number, h: number, state: an
   if (state.frameCount % 2 === 0) {
     ctx.font = `${fontSize}px monospace`;
     ctx.textAlign = "center";
-
+    
     for (let i = 0; i < state.drops.length; i++) {
       const char = state.chars[Math.floor(Math.random() * state.chars.length)];
-
+      
       const x = i * fontSize + fontSize / 2;
       const y = state.drops[i] * fontSize;
 
@@ -42,7 +42,7 @@ function drawRain(ctx: CanvasRenderingContext2D, w: number, h: number, state: an
       } else {
         ctx.fillStyle = "#0284c7"; // Deep blue like the image
       }
-
+      
       ctx.fillText(char, x, y);
 
       // Reset drop to top randomly when it crosses screen
@@ -72,16 +72,16 @@ function drawNebula(ctx: CanvasRenderingContext2D, w: number, h: number, state: 
     ctx.fillStyle = g;
     ctx.fillRect(0, 0, w, h);
   }
-
+  
   // Floating classic orbs / network particles
   if (!state.orbs) {
     state.orbs = Array.from({ length: 45 }, () => ({
-      x: Math.random() * w, y: Math.random() * h,
+      x: Math.random() * w, y: Math.random() * h, 
       r: Math.random() * 2 + 1,
       vx: (Math.random() - 0.5) * 0.8, vy: (Math.random() - 0.5) * 0.8,
     }));
   }
-
+  
   // Draw connecting lines
   ctx.lineWidth = 0.6;
   for (let i = 0; i < state.orbs.length; i++) {
@@ -105,7 +105,7 @@ function drawNebula(ctx: CanvasRenderingContext2D, w: number, h: number, state: 
     ctx.arc(o.x, o.y, o.r, 0, Math.PI * 2);
     ctx.fillStyle = `rgba(220, 240, 255, 0.7)`;
     ctx.fill();
-
+    
     // Core glow
     ctx.beginPath();
     ctx.arc(o.x, o.y, o.r * 3, 0, Math.PI * 2);
@@ -117,7 +117,7 @@ function drawNebula(ctx: CanvasRenderingContext2D, w: number, h: number, state: 
 
     o.x += o.vx;
     o.y += o.vy;
-
+    
     if (o.x < 0 || o.x > w) o.vx *= -1;
     if (o.y < 0 || o.y > h) o.vy *= -1;
   });
@@ -269,17 +269,17 @@ export function AnimatedBg({ index }: { index: number }) {
     if (anim.type !== "canvas") return;
     const canvas = canvasRef.current;
     if (!canvas) return;
-    const resize = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-      stateRef.current = {};
+    const resize = () => { 
+      canvas.width = window.innerWidth; 
+      canvas.height = window.innerHeight; 
+      stateRef.current = {}; 
     };
     resize();
     window.addEventListener("resize", resize);
     rafRef.current = requestAnimationFrame(loop);
-    return () => {
-      cancelAnimationFrame(rafRef.current);
-      window.removeEventListener("resize", resize);
+    return () => { 
+      cancelAnimationFrame(rafRef.current); 
+      window.removeEventListener("resize", resize); 
     };
   }, [loop, anim.type]);
 
@@ -294,15 +294,17 @@ export function AnimatedBg({ index }: { index: number }) {
           loop
           muted
           playsInline
-          className={`w-full h-full object-cover transition-opacity duration-1000 ${isBrightBg ? "opacity-45" : "opacity-55"
-            }`}
+          className={`w-full h-full object-cover transition-opacity duration-1000 ${
+            isBrightBg ? "opacity-45" : "opacity-55"
+          }`}
         />
         {/* Adaptive overlay: higher dimming and blur for bright backgrounds to ensure text readability */}
-        <div
-          className={`absolute inset-0 transition-all duration-1000 ${isBrightBg
-              ? "bg-black/60 backdrop-blur-[1.5px]"
+        <div 
+          className={`absolute inset-0 transition-all duration-1000 ${
+            isBrightBg 
+              ? "bg-black/60 backdrop-blur-[1.5px]" 
               : "bg-background/10 backdrop-blur-[0.5px]"
-            }`}
+          }`} 
         />
       </div>
     );
@@ -339,7 +341,7 @@ export function AnimatedBgThumb({ index, size = 40 }: { index: number; size?: nu
 
   if (anim.type === "video") {
     return (
-      <div
+      <div 
         style={{ width: size, height: size }}
         className="absolute inset-0 rounded-lg overflow-hidden flex items-center justify-center bg-black/50"
       >
@@ -352,8 +354,8 @@ export function AnimatedBgThumb({ index, size = 40 }: { index: number; size?: nu
           className="w-full h-full object-cover scale-125"
         />
         {/* A tiny color mask in the thumbnail representing the theme */}
-        <div
-          className="absolute inset-0 opacity-15"
+        <div 
+          className="absolute inset-0 opacity-15" 
           style={{ backgroundColor: anim.color }}
         />
       </div>

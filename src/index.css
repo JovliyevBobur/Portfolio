@@ -45,11 +45,11 @@ All colors MUST be HSL.
     /* Glassmorphism effects */
     --glass-bg: 220 20% 12% / 0.4;
     --glass-border: 220 15% 40% / 0.2;
-
+    
     /* Glow effects */
     --glow-primary: 189 94% 60%;
     --glow-secondary: 320 85% 65%;
-
+    
     /* Gradients */
     --gradient-primary: linear-gradient(135deg, hsl(189 94% 60%) 0%, hsl(320 85% 65%) 100%);
     --gradient-dark: linear-gradient(180deg, hsl(220 20% 11%) 0%, hsl(220 18% 14%) 100%);
@@ -63,27 +63,27 @@ All colors MUST be HSL.
     -webkit-backdrop-filter: blur(20px);
     border: 1px solid rgba(255, 255, 255, 0.1);
   }
-
+  
   .glow-primary {
     box-shadow: 0 0 20px hsl(var(--glow-primary) / 0.4),
-      0 0 40px hsl(var(--glow-primary) / 0.2);
+                0 0 40px hsl(var(--glow-primary) / 0.2);
   }
-
+  
   .glow-secondary {
     box-shadow: 0 0 20px hsl(var(--glow-secondary) / 0.4),
-      0 0 40px hsl(var(--glow-secondary) / 0.2);
+                0 0 40px hsl(var(--glow-secondary) / 0.2);
   }
-
+  
   .glow-text-primary {
     text-shadow: 0 0 20px hsl(var(--glow-primary) / 0.6),
-      0 0 40px hsl(var(--glow-primary) / 0.3);
+                 0 0 40px hsl(var(--glow-primary) / 0.3);
   }
-
+  
   .glow-text-secondary {
     text-shadow: 0 0 20px hsl(var(--glow-secondary) / 0.6),
-      0 0 40px hsl(var(--glow-secondary) / 0.3);
+                 0 0 40px hsl(var(--glow-secondary) / 0.3);
   }
-
+  
   .gradient-text {
     background: var(--gradient-primary);
     -webkit-background-clip: text;
@@ -119,6 +119,20 @@ All colors MUST be HSL.
 .theme-bright-bg .text-muted-foreground {
   color: rgba(255, 255, 255, 0.9) !important;
   text-shadow: 0 1px 3px rgba(0, 0, 0, 0.95) !important;
+}
+
+.theme-bright-bg .gradient-text {
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.95)) !important;
+}
+
+.theme-bright-bg .glow-text-primary,
+.theme-bright-bg .glow-text-secondary {
+  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.95)) !important;
+}
+
+.theme-bright-bg div.bg-background\/80 {
+  background-color: rgba(8, 12, 22, 0.95) !important;
+  border-bottom-color: rgba(6, 182, 212, 0.3) !important;
 }
 
 .theme-bright-bg .glass {
