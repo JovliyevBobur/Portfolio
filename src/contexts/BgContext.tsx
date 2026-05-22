@@ -29,8 +29,8 @@ export const BgProvider = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     if (typeof window === "undefined") return;
-    // 2-6-8 in 1-based index is 1, 5, 7 in 0-based index
-    const isBrightBg = activeBgIndex === 1 || activeBgIndex === 5 || activeBgIndex === 7;
+    // Bright backgrounds based on new indices: Abstrakt To'lqin (2), Raqamli Oqim (4), Kosmos Oqimi (7)
+    const isBrightBg = activeBgIndex === 2 || activeBgIndex === 4 || activeBgIndex === 7;
     if (isBrightBg) {
       document.documentElement.classList.add("theme-bright-bg");
     } else {

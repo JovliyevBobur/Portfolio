@@ -235,15 +235,15 @@ export interface BgAnimationType {
 }
 
 export const bgAnimations: BgAnimationType[] = [
-  { name: "Yomg'ir", type: "canvas", draw: drawRain, color: "#0af" },
-  { name: "Kosmos Oqimi", type: "video", videoSrc: "/bg/133268-756249042.mp4", color: "#ec4899" },
-  { name: "Tumanlik", type: "canvas", draw: drawNebula, color: "#6366f1" },
   { name: "Kiber Tarmoq", type: "video", videoSrc: "/bg/202963-919289028.mp4", color: "#3b82f6" },
   { name: "Yulduzlar", type: "canvas", draw: drawComets, color: "#38bdf8" },
   { name: "Abstrakt To'lqin", type: "video", videoSrc: "/bg/202965-919289035.mp4", color: "#10b981" },
   { name: "Grid", type: "canvas", draw: drawGrid, color: "#06b6d4" },
   { name: "Raqamli Oqim", type: "video", videoSrc: "/bg/205172-926480911.mp4", color: "#f59e0b" },
   { name: "Pufaklar", type: "canvas", draw: drawBubbles, color: "#8b5cf6" },
+  { name: "Yomg'ir", type: "canvas", draw: drawRain, color: "#0af" },
+  { name: "Kosmos Oqimi", type: "video", videoSrc: "/bg/133268-756249042.mp4", color: "#ec4899" },
+  { name: "Tumanlik", type: "canvas", draw: drawNebula, color: "#6366f1" },
 ];
 
 
@@ -284,7 +284,7 @@ export function AnimatedBg({ index }: { index: number }) {
   }, [loop, anim.type]);
 
   if (anim.type === "video") {
-    const isBrightBg = index === 1 || index === 5 || index === 7;
+    const isBrightBg = index === 2 || index === 4 || index === 7;
     return (
       <div className="fixed inset-0 w-full h-full overflow-hidden pointer-events-none z-0">
         <video
