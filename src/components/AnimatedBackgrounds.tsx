@@ -236,13 +236,13 @@ export interface BgAnimationType {
 
 export const bgAnimations: BgAnimationType[] = [
   { name: "Kiber Tarmoq", type: "video", videoSrc: "/bg/202963-919289028.mp4", color: "#3b82f6" },
-  { name: "Yulduzlar", type: "canvas", draw: drawComets, color: "#38bdf8" },
-  { name: "Abstrakt To'lqin", type: "video", videoSrc: "/bg/202965-919289035.mp4", color: "#10b981" },
+  { name: "Yomg'ir", type: "canvas", draw: drawRain, color: "#0af" },
+  { name: "Kosmos Oqimi", type: "video", videoSrc: "/bg/133268-756249042.mp4", color: "#ec4899" },
   { name: "Grid", type: "canvas", draw: drawGrid, color: "#06b6d4" },
   { name: "Raqamli Oqim", type: "video", videoSrc: "/bg/205172-926480911.mp4", color: "#f59e0b" },
   { name: "Pufaklar", type: "canvas", draw: drawBubbles, color: "#8b5cf6" },
-  { name: "Yomg'ir", type: "canvas", draw: drawRain, color: "#0af" },
-  { name: "Kosmos Oqimi", type: "video", videoSrc: "/bg/133268-756249042.mp4", color: "#ec4899" },
+  { name: "Yulduzlar", type: "canvas", draw: drawComets, color: "#38bdf8" },
+  { name: "Abstrakt To'lqin", type: "video", videoSrc: "/bg/202965-919289035.mp4", color: "#10b981" },
   { name: "Tumanlik", type: "canvas", draw: drawNebula, color: "#6366f1" },
 ];
 
