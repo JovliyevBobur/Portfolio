@@ -13,8 +13,11 @@ import { Providers } from "@/components/Providers";
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 
 export const metadata: Metadata = {
-  title: "Premium Developer Portfolio",
+  title: "Jovliyev Bobur Nuriddin o'g'li",
   description: "Senior Software Engineer Portfolio",
+  icons: {
+    icon: '/brand-logo.png'
+  }
 };
 
 export default function RootLayout({
