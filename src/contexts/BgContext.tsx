@@ -27,16 +27,8 @@ export const BgProvider = ({ children }: { children: ReactNode }) => {
     } catch {}
   }, []);
 
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-    // Bright backgrounds based on new indices: Abstrakt To'lqin (2), Raqamli Oqim (4), Kosmos Oqimi (7)
-    const isBrightBg = activeBgIndex === 2 || activeBgIndex === 4 || activeBgIndex === 7;
-    if (isBrightBg) {
-      document.documentElement.classList.add("theme-bright-bg");
-    } else {
-      document.documentElement.classList.remove("theme-bright-bg");
-    }
-  }, [activeBgIndex]);
+  // We no longer add theme-bright-bg because all backgrounds are dimmed enough using overlays,
+  // allowing the standard dark theme text colors to look great and remain highly readable.
 
   const setActiveBgIndex = (index: number) => {
     setActiveBgIndexState(index);
