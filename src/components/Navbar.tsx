@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
+import { motion, Variants } from "framer-motion";
 import { Clock, CloudSun, Calendar, Wind } from "lucide-react";
 import { Button } from "./ui/button";
 import { LanguageSelector } from "./LanguageSelector";
@@ -68,10 +69,28 @@ const Navbar = () => {
     { name: "Contact", href: "/contact" },
   ];
 
+  const navVariants: Variants = {
+    hidden: { opacity: 0, y: -20 },
+    visible: { 
+      opacity: 1, y: 0,
+      transition: { duration: 0.5, staggerChildren: 0.1 }
+    }
+  };
+
+  const itemVariants: Variants = {
+    hidden: { opacity: 0, y: -10 },
+    visible: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 300, damping: 24 } }
+  };
+
   return (
-    <div className="fixed top-0 left-0 right-0 z-50 flex flex-col">
+    <motion.div 
+      initial="hidden"
+      animate="visible"
+      variants={navVariants}
+      className="fixed top-0 left-0 right-0 z-50 flex flex-col"
+    >
       {/* Top Bar (Clock, Date, Weather, Wind) */}
-      <div className="bg-[#050505] text-primary w-full py-2 px-4 md:px-8 flex flex-col sm:flex-row justify-between items-center text-sm border-b border-primary/20">
+      <motion.div variants={itemVariants} className="bg-[#050505] text-primary w-full py-2 px-4 md:px-8 flex flex-col sm:flex-row justify-between items-center text-sm border-b border-primary/20">
         <div className="flex items-center gap-6 font-medium">
           <div className="flex items-center gap-2">
             <Clock className="w-4 h-4 text-cyan-400" />
@@ -98,7 +117,7 @@ const Navbar = () => {
             </span>
           </div>
         </div>
-      </div>
+      </motion.div>
 
       {/* Main Navbar */}
       <div className="bg-background/80 backdrop-blur-md border-b border-white/5 shadow-sm transition-all duration-300">
@@ -117,31 +136,32 @@ const Navbar = () => {
             {navLinks.map((link) => {
               const isActive = pathname === link.href;
               return (
-                <Link
-                  key={link.name}
-                  href={link.href}
-                  className={`text-base font-bold transition-all duration-300 py-2 px-3 rounded-[10px] ${
-                    isActive
-                      ? "text-white bg-white/10 shadow-[0_4px_10px_-2px_rgba(168,85,247,0.3)] border-b-2 border-purple-500"
-                      : "text-muted-foreground border-transparent hover:text-white hover:bg-white/5"
-                  }`}
-                >
-                  {link.name}
-                </Link>
+                <motion.div key={link.name} variants={itemVariants}>
+                  <Link
+                    href={link.href}
+                    className={`relative text-base font-bold transition-all duration-300 py-2 px-3 rounded-[10px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-black ${
+                      isActive
+                        ? "text-white bg-white/10 shadow-[0_4px_10px_-2px_rgba(168,85,247,0.3)] border-b-2 border-purple-500"
+                        : "text-muted-foreground border-transparent hover:text-white hover:bg-white/5 hover:scale-105 inline-block"
+                    }`}
+                  >
+                    {link.name}
+                  </Link>
+                </motion.div>
               );
             })}
           </nav>
 
-          <div className="flex items-center gap-3">
-            <a href="https://t.me/Jovliyev_Bobur" target="_blank" rel="noopener noreferrer">
+          <motion.div variants={itemVariants} className="flex items-center gap-3">
+            <a href="https://t.me/Jovliyev_Bobur" target="_blank" rel="noopener noreferrer" className="focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-black rounded-full">
               <Button
                 variant="outline"
-                className="hidden md:flex border-primary/30 text-white hover:bg-primary/20 hover:text-white rounded-full px-5 font-semibold text-sm h-10 transition-all duration-300 hover:shadow-[0_0_15px_rgba(6,182,212,0.4)] border border-cyan-500 bg-transparent"
+                className="hidden md:flex border-primary/30 text-white hover:bg-primary/20 hover:text-white rounded-full px-5 font-semibold text-sm h-10 transition-all duration-300 hover:shadow-[0_0_15px_rgba(6,182,212,0.4)] hover:scale-105 border border-cyan-500 bg-transparent"
               >
                 Download CV
               </Button>
             </a>
-            <a href="https://t.me/Jovliyev_Bobur" target="_blank" rel="noopener noreferrer">
+            <a href="https://t.me/Jovliyev_Bobur" target="_blank" rel="noopener noreferrer" className="focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-black rounded-full">
               <Button
                 className="bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 text-white rounded-full px-6 font-semibold text-sm h-10 border-0 shadow-[0_0_15px_rgba(168,85,247,0.4)] transition-all duration-300 hover:scale-105 hover:shadow-[0_0_25px_rgba(168,85,247,0.6)]"
               >
@@ -151,10 +171,10 @@ const Navbar = () => {
             <div className="ml-2 pl-4 border-l border-white/10">
               <LanguageSelector />
             </div>
-          </div>
+          </motion.div>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 

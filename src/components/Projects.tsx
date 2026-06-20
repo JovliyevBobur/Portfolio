@@ -117,7 +117,9 @@ const Projects = () => {
               transition={{ duration: 0.6, delay: index * 0.1 }}
               onHoverStart={() => setHoveredIndex(index)}
               onHoverEnd={() => setHoveredIndex(null)}
-              className="group relative"
+              whileHover={{ scale: 1.03, y: -10 }}
+              className="group relative cursor-pointer focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary rounded-[2.8rem]"
+              tabIndex={0}
             >
               <div className="relative z-10 glass p-10 rounded-[2.5rem] h-full flex flex-col border border-white/5 group-hover:border-primary/40 transition-all duration-500 hover:shadow-[0_0_50px_rgba(6,182,212,0.1)] overflow-hidden">
                 <div className={`absolute inset-0 bg-gradient-to-br ${category.gradient} opacity-0 group-hover:opacity-[0.03] transition-all duration-700`} />
@@ -143,7 +145,7 @@ const Projects = () => {
                       href={link.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex items-center justify-center gap-2 px-4 py-3 bg-white/5 hover:bg-primary hover:text-black text-white text-xs font-bold rounded-xl border border-white/10 hover:border-primary transition-all group/btn"
+                      className="flex items-center justify-center gap-2 px-4 py-3 bg-white/5 hover:bg-primary hover:text-black text-white text-xs font-bold rounded-xl border border-white/10 hover:border-primary transition-all group/btn focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
                     >
                       <span className="truncate">{link.name}</span>
                       <ExternalLink className="w-3 h-3 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5 transition-transform" />
@@ -170,7 +172,7 @@ const Projects = () => {
             href="https://github.com/JBoburHacker005" 
             target="_blank" 
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-3 px-8 py-4 rounded-full glass border border-primary/30 text-primary font-bold hover:bg-primary hover:text-black transition-all group"
+            className="inline-flex items-center gap-3 px-8 py-4 rounded-full glass border border-primary/30 text-primary font-bold hover:bg-primary hover:text-black hover:scale-105 hover:shadow-[0_0_30px_rgba(6,182,212,0.4)] transition-all duration-300 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
           >
             Barcha loyihalarni GitHubda ko'rish
             <ArrowRight className="w-5 h-5 group-hover:translate-x-2 transition-transform" />

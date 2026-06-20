@@ -8,6 +8,7 @@ import { LiquidButton } from "./ui/LiquidButton";
 import { BadgeLanyard } from "./ui/BadgeLanyard";
 import { useTranslation } from "react-i18next";
 import Link from "next/link";
+import Spline from '@splinetool/react-spline';
 
 const Hero = () => {
   const { t } = useTranslation();
@@ -23,8 +24,13 @@ const Hero = () => {
     <>
     <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden py-10">
       
-      {/* 3D Badge Lanyard - Hangs from top right */}
-      <div className="hidden lg:block absolute top-[-50px] right-[5%] xl:right-[15%] z-50 pointer-events-auto">
+      {/* 3D Spline Robot - Leftmost */}
+      <div className="hidden lg:flex absolute top-[10%] left-[-5%] xl:left-0 w-[500px] h-[600px] z-10 pointer-events-auto opacity-90 items-center justify-center">
+         <Spline scene="https://prod.spline.design/FcZ66SFMX1YbF-0I/scene.splinecode" className="w-full h-full cursor-grab active:cursor-grabbing" />
+      </div>
+
+      {/* 3D Badge Lanyard - Rightmost */}
+      <div className="hidden lg:block absolute top-[-50px] right-[-2%] xl:right-[2%] z-50 pointer-events-auto">
         <BadgeLanyard />
       </div>
 
@@ -126,8 +132,8 @@ const Hero = () => {
                 initial={{ opacity: 0, scale: 0 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ delay: 0.8 + index * 0.1, type: "spring" }}
-                whileHover={{ scale: 1.2, backgroundColor: "rgba(6, 182, 212, 0.2)", borderColor: "rgba(6, 182, 212, 0.5)" }}
-                className="p-3 glass rounded-full border border-primary/10 transition-all duration-300"
+                whileHover={{ scale: 1.2, backgroundColor: "rgba(6, 182, 212, 0.2)", borderColor: "rgba(6, 182, 212, 0.5)", boxShadow: "0 0 20px rgba(6, 182, 212, 0.4)" }}
+                className="p-3 glass rounded-full border border-primary/10 transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-black"
               >
                 <social.icon className="w-5 h-5 text-primary/80" />
               </motion.a>
@@ -140,12 +146,12 @@ const Hero = () => {
             transition={{ delay: 0.8, duration: 0.6 }}
             className="flex flex-wrap gap-4 justify-center mb-16"
           >
-            <Link href="/projects">
+            <Link href="/projects" className="focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-black rounded-[30px]">
               <LiquidButton active={true}>
                 {t('Hero.ViewWork')}
               </LiquidButton>
             </Link>
-            <a href="tel:+998930054287">
+            <a href="tel:+998930054287" className="focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-black rounded-[30px]">
               <LiquidButton>
                 {t('Hero.GetTouch')}
               </LiquidButton>
@@ -227,7 +233,9 @@ const Hero = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.1 }}
-                className="glass p-6 rounded-2xl border border-primary/20 hover:border-primary/50 transition-colors group"
+                whileHover={{ scale: 1.05, y: -5 }}
+                className="glass p-6 rounded-2xl border border-primary/20 hover:border-primary/50 transition-all duration-300 group hover:shadow-[0_0_30px_rgba(6,182,212,0.2)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                tabIndex={0}
               >
                 <div className="w-14 h-14 bg-primary/10 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
                   <service.icon className="w-8 h-8 text-primary" />

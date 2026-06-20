@@ -102,7 +102,14 @@ const Skills = () => {
                     whileHover={{ y: -8, scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                     onClick={() => setSelectedSkill(skill)}
-                    className="glass p-6 rounded-2xl border border-primary/20 hover:border-primary/60 hover:shadow-[0_0_40px_rgba(6,182,212,0.25)] transition-all duration-300 group relative overflow-hidden cursor-pointer backdrop-blur-xl bg-black/40"
+                    className="glass p-6 rounded-2xl border border-primary/20 hover:border-primary/60 hover:shadow-[0_0_40px_rgba(6,182,212,0.4)] transition-all duration-300 group relative overflow-hidden cursor-pointer backdrop-blur-xl bg-black/40 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary"
+                    tabIndex={0}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        setSelectedSkill(skill);
+                      }
+                    }}
                   >
                     <div className="flex items-start justify-between mb-4">
                       <div className="p-3 rounded-xl bg-background/50 border border-white/5 group-hover:bg-primary group-hover:text-black transition-all duration-300">

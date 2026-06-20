@@ -54,20 +54,20 @@ export function BadgeLanyard() {
     >
       {/* The entire assembly swings left/right */}
       <motion.div 
-        className="flex flex-col items-center"
+        className="flex flex-col items-center cursor-grab active:cursor-grabbing"
+        initial={{ y: -800, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ delay: 5, type: "spring", stiffness: 60, damping: 12 }}
+        drag
+        dragConstraints={{ top: 0, left: -300, right: 300, bottom: 200 }}
+        dragElastic={0.2}
         style={{ 
           rotateZ: swing, 
           transformOrigin: "top center" 
         }}
       >
         {/* Lanyard String */}
-        <div className="w-4 h-48 bg-[#0a0a0a] border-l border-r border-white/10 flex flex-col items-center shadow-lg relative z-0">
-           {/* Text on lanyard */}
-           <div className="absolute inset-0 overflow-hidden flex flex-col items-center justify-center pointer-events-none">
-             <div className="text-[8px] font-bold text-primary tracking-widest -rotate-90 whitespace-nowrap opacity-70">
-                JBN CREATIVE • SOFTWARE ENGINEER
-             </div>
-           </div>
+        <div className="w-4 h-48 bg-[#0a0a0a] border-l border-r border-white/10 flex flex-col items-center shadow-lg relative z-0 pointer-events-none">
         </div>
 
         {/* Metal Clip */}

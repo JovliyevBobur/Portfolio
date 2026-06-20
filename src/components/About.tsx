@@ -7,7 +7,6 @@ import {
   Server, Monitor, Globe, Laptop, Cpu, 
   ShieldCheck, Zap, Layers, Award
 } from "lucide-react";
-import Spline from '@splinetool/react-spline';
 
 const About = () => {
   const ref = useRef(null);
@@ -85,7 +84,9 @@ const About = () => {
                   initial={{ opacity: 0, scale: 0.9 }}
                   animate={isInView ? { opacity: 1, scale: 1 } : {}}
                   transition={{ delay: 0.4 + i * 0.1 }}
-                  className="glass p-6 rounded-2xl border border-primary/10 group hover:border-primary/40 transition-all"
+                  whileHover={{ scale: 1.05, y: -5 }}
+                  className="glass p-6 rounded-2xl border border-primary/10 group hover:border-primary/40 transition-all duration-300 hover:shadow-[0_0_30px_rgba(6,182,212,0.2)] cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                  tabIndex={0}
                 >
                   <stat.icon className="w-8 h-8 text-primary mb-3 group-hover:scale-110 transition-transform" />
                   <div className="text-2xl font-extrabold text-white mb-1">{stat.value}</div>
@@ -101,18 +102,6 @@ const About = () => {
             transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
             className="lg:w-1/2 space-y-8"
           >
-            {/* 3D Spline Robot Integration */}
-            <div className="w-full h-[350px] md:h-[450px] rounded-3xl overflow-hidden relative glass border border-primary/20 bg-black/40 shadow-[0_0_40px_rgba(6,182,212,0.15)] flex items-center justify-center group">
-              <div className="absolute inset-0 bg-gradient-to-t from-[#06b6d4]/10 to-transparent z-0 pointer-events-none"></div>
-              <Spline scene="https://prod.spline.design/FcZ66SFMX1YbF-0I/scene.splinecode" className="relative z-10 w-full h-full cursor-grab active:cursor-grabbing" />
-              
-              {/* Floating label */}
-              <div className="absolute top-4 right-4 z-20 px-3 py-1 rounded-full bg-black/50 backdrop-blur-md border border-white/10 text-xs text-white/70 flex items-center gap-2 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                <span className="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
-                Interactive 3D
-              </div>
-            </div>
-
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {highlights.map((item, i) => (
                 <motion.div
@@ -120,7 +109,9 @@ const About = () => {
                   initial={{ opacity: 0, y: 20 }}
                   animate={isInView ? { opacity: 1, y: 0 } : {}}
                   transition={{ delay: 0.5 + i * 0.1 }}
-                  className="p-8 rounded-3xl bg-white/5 border border-white/10 hover:bg-white/10 hover:border-primary/30 transition-all group"
+                  whileHover={{ scale: 1.05, y: -5 }}
+                  className="p-8 rounded-3xl bg-white/5 border border-white/10 hover:bg-white/10 hover:border-primary/30 transition-all duration-300 group hover:shadow-[0_0_30px_rgba(6,182,212,0.2)] cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                  tabIndex={0}
                 >
                   <div className="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center mb-6 group-hover:bg-primary group-hover:text-black transition-all">
                     <item.icon className="w-7 h-7 text-primary group-hover:text-inherit" />
