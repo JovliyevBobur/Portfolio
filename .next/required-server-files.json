@@ -102,7 +102,7 @@
         "transform": "lodash/{{member}}"
       }
     },
-    "outputFileTracingRoot": "C:\\Users\\ADMIN\\Documents\\Portfolio",
+    "outputFileTracingRoot": "C:\\Users\\Bobur\\Documents\\GitHub\\Portfolio",
     "experimental": {
       "useSkewCookie": false,
       "cacheLife": {
@@ -292,10 +292,10 @@
     "bundlePagesRouterDependencies": false,
     "configFileName": "next.config.mjs",
     "turbopack": {
-      "root": "C:\\Users\\ADMIN\\Documents\\Portfolio"
+      "root": "C:\\Users\\Bobur\\Documents\\GitHub\\Portfolio"
     }
   },
-  "appDir": "C:\\Users\\ADMIN\\Documents\\Portfolio",
+  "appDir": "C:\\Users\\Bobur\\Documents\\GitHub\\Portfolio",
   "relativeAppDir": "",
   "files": [
     ".next\\routes-manifest.json",

@@ -7,6 +7,7 @@ import {
   Server, Monitor, Globe, Laptop, Cpu, 
   ShieldCheck, Zap, Layers, Award
 } from "lucide-react";
+import Spline from '@splinetool/react-spline';
 
 const About = () => {
   const ref = useRef(null);
@@ -100,6 +101,18 @@ const About = () => {
             transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
             className="lg:w-1/2 space-y-8"
           >
+            {/* 3D Spline Robot Integration */}
+            <div className="w-full h-[350px] md:h-[450px] rounded-3xl overflow-hidden relative glass border border-primary/20 bg-black/40 shadow-[0_0_40px_rgba(6,182,212,0.15)] flex items-center justify-center group">
+              <div className="absolute inset-0 bg-gradient-to-t from-[#06b6d4]/10 to-transparent z-0 pointer-events-none"></div>
+              <Spline scene="https://prod.spline.design/FcZ66SFMX1YbF-0I/scene.splinecode" className="relative z-10 w-full h-full cursor-grab active:cursor-grabbing" />
+              
+              {/* Floating label */}
+              <div className="absolute top-4 right-4 z-20 px-3 py-1 rounded-full bg-black/50 backdrop-blur-md border border-white/10 text-xs text-white/70 flex items-center gap-2 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                <span className="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+                Interactive 3D
+              </div>
+            </div>
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {highlights.map((item, i) => (
                 <motion.div

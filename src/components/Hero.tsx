@@ -4,6 +4,8 @@ import { motion } from "framer-motion";
 import { TypeAnimation } from "react-type-animation";
 import { Github, Linkedin, Mail, Instagram, Layout, Database, Smartphone, Code } from "lucide-react";
 import { Button } from "./ui/button";
+import { LiquidButton } from "./ui/LiquidButton";
+import { BadgeLanyard } from "./ui/BadgeLanyard";
 import { useTranslation } from "react-i18next";
 import Link from "next/link";
 
@@ -21,7 +23,12 @@ const Hero = () => {
     <>
     <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden py-10">
       
-      <div className="container mx-auto px-4 z-10">
+      {/* 3D Badge Lanyard - Hangs from top right */}
+      <div className="hidden lg:block absolute top-[-50px] right-[5%] xl:right-[15%] z-50 pointer-events-auto">
+        <BadgeLanyard />
+      </div>
+
+      <div className="container mx-auto px-4 z-10 relative">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -134,21 +141,14 @@ const Hero = () => {
             className="flex flex-wrap gap-4 justify-center mb-16"
           >
             <Link href="/projects">
-              <Button
-                size="lg"
-                className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold px-8 py-6 text-lg glow-primary transition-all duration-300 hover:scale-105"
-              >
+              <LiquidButton active={true}>
                 {t('Hero.ViewWork')}
-              </Button>
+              </LiquidButton>
             </Link>
             <a href="tel:+998930054287">
-              <Button
-                size="lg"
-                variant="outline"
-                className="border-2 border-primary text-primary hover:bg-primary hover:text-primary-foreground font-semibold px-8 py-6 text-lg transition-all duration-300 hover:scale-105"
-              >
+              <LiquidButton>
                 {t('Hero.GetTouch')}
-              </Button>
+              </LiquidButton>
             </a>
           </motion.div>
 

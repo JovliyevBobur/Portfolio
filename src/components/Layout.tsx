@@ -6,6 +6,7 @@ import Footer from "./Footer";
 import ScrollProgress from "./ScrollProgress";
 import { useBg } from "../contexts/BgContext";
 import { AnimatedBg } from "./AnimatedBackgrounds";
+import { FuturisticMenu } from "./ui/FuturisticMenu";
 
 export default function Layout({ children }: { children: ReactNode }) {
   const { activeBgIndex } = useBg();
@@ -16,6 +17,7 @@ export default function Layout({ children }: { children: ReactNode }) {
       style={{ backgroundColor: 'transparent' }}
     >
       <AnimatedBg index={activeBgIndex} />
+      <FuturisticMenu position="bottom-right" />
       
       <ScrollProgress />
       <Navbar />
