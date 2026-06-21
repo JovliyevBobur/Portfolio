@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import Spline from '@splinetool/react-spline';
 
 const Preloader = () => {
   const [progress, setProgress] = useState(0);
@@ -36,9 +37,34 @@ const Preloader = () => {
           initial={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.8, ease: "easeInOut" }}
-          className="fixed inset-0 z-[99999] bg-black flex flex-col items-center justify-center text-white"
+          className="fixed inset-0 z-[99999] bg-black flex flex-col items-center justify-center text-white overflow-hidden"
         >
-          <div className="flex flex-col items-center w-full max-w-md px-4">
+          {/* Moving 3D Robots around texts */}
+          <motion.div 
+            animate={{ y: [-20, 20, -20], x: [-10, 10, -10], rotate: [-5, 5, -5] }}
+            transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+            className="absolute top-[10%] left-[10%] md:left-[20%] w-[200px] h-[200px] opacity-80 pointer-events-none"
+          >
+            <Spline scene="https://prod.spline.design/6Wq1Q7YGyM-iab9i/scene.splinecode" />
+          </motion.div>
+          
+          <motion.div 
+            animate={{ y: [20, -20, 20], x: [10, -10, 10], rotate: [5, -5, 5] }}
+            transition={{ duration: 7, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+            className="absolute bottom-[10%] md:bottom-[20%] right-[5%] md:right-[15%] w-[250px] h-[250px] opacity-80 pointer-events-none"
+          >
+            <Spline scene="https://prod.spline.design/qJ-X-tX2H3mFkY4j/scene.splinecode" />
+          </motion.div>
+
+          <motion.div 
+            animate={{ y: [-15, 15, -15], x: [15, -15, 15], rotate: [-10, 10, -10] }}
+            transition={{ duration: 8, repeat: Infinity, ease: "easeInOut", delay: 2 }}
+            className="absolute top-[15%] right-[10%] md:right-[20%] w-[180px] h-[180px] opacity-80 pointer-events-none"
+          >
+            <Spline scene="https://prod.spline.design/gA2E-iK0e7p6E7Qx/scene.splinecode" />
+          </motion.div>
+
+          <div className="flex flex-col items-center w-full max-w-md px-4 relative z-10">
             <motion.div
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}

@@ -29,9 +29,9 @@ const Hero = () => {
          <Spline scene="https://prod.spline.design/FcZ66SFMX1YbF-0I/scene.splinecode" className="w-full h-full cursor-grab active:cursor-grabbing" />
       </div>
 
-      {/* 3D Badge Lanyard - Rightmost */}
-      <div className="hidden lg:block absolute top-[-50px] right-[-2%] xl:right-[2%] z-50 pointer-events-auto">
-        <BadgeLanyard />
+      {/* 3D Spline Robot - Rightmost (Replaced BadgeLanyard) */}
+      <div className="hidden lg:flex absolute top-[10%] right-[-5%] xl:right-0 w-[500px] h-[600px] z-10 pointer-events-auto opacity-90 items-center justify-center">
+        <Spline scene="https://prod.spline.design/6Wq1Q7YGyM-iab9i/scene.splinecode" className="w-full h-full cursor-grab active:cursor-grabbing" />
       </div>
 
       <div className="container mx-auto px-4 z-10 relative">

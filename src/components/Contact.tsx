@@ -8,6 +8,7 @@ import { Input } from "./ui/input";
 import { Textarea } from "./ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
+import { BadgeLanyard } from "./ui/BadgeLanyard";
 
 const Contact = () => {
   const ref = useRef(null);
@@ -86,7 +87,13 @@ const Contact = () => {
 
   return (
     <section ref={ref} id="contact" className="py-32 relative overflow-hidden bg-black/20">
-      <div className="container mx-auto px-4">
+      
+      {/* 3D Badge Lanyard - Background decoration */}
+      <div className="hidden lg:block absolute top-[10%] right-[5%] z-0 pointer-events-auto opacity-70 hover:opacity-100 transition-opacity duration-500 scale-75 xl:scale-90 origin-top-right">
+        <BadgeLanyard />
+      </div>
+
+      <div className="container mx-auto px-4 relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
