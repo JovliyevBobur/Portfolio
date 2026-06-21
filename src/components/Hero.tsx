@@ -5,7 +5,7 @@ import { TypeAnimation } from "react-type-animation";
 import { Github, Linkedin, Mail, Instagram, Layout, Database, Smartphone, Code } from "lucide-react";
 import { Button } from "./ui/button";
 import { LiquidButton } from "./ui/LiquidButton";
-
+import { BadgeLanyard } from "./ui/BadgeLanyard";
 import { useTranslation } from "react-i18next";
 import Link from "next/link";
 import Spline from '@splinetool/react-spline';
@@ -29,9 +29,9 @@ const Hero = () => {
          <Spline scene="https://prod.spline.design/FcZ66SFMX1YbF-0I/scene.splinecode" className="w-full h-full cursor-grab active:cursor-grabbing" />
       </div>
 
-      {/* 3D Spline Robot - Rightmost (Symmetric) */}
-      <div className="hidden lg:flex absolute top-[10%] right-[-5%] xl:right-0 w-[500px] h-[600px] z-10 pointer-events-auto opacity-90 items-center justify-center" style={{ transform: 'scaleX(-1)' }}>
-         <Spline scene="https://prod.spline.design/FcZ66SFMX1YbF-0I/scene.splinecode" className="w-full h-full cursor-grab active:cursor-grabbing" />
+      {/* 3D Badge Lanyard - Rightmost */}
+      <div className="hidden lg:flex absolute top-[10%] right-[-5%] xl:right-0 w-[500px] h-[600px] z-10 pointer-events-auto opacity-90 items-center justify-center">
+         <BadgeLanyard />
       </div>
 
       <div className="container mx-auto px-4 z-10 relative">

@@ -8,7 +8,6 @@ import { Input } from "./ui/input";
 import { Textarea } from "./ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
-import { BadgeLanyard } from "./ui/BadgeLanyard";
 
 const Contact = () => {
   const ref = useRef(null);
@@ -87,11 +86,6 @@ const Contact = () => {
 
   return (
     <section ref={ref} id="contact" className="py-32 relative overflow-hidden bg-black/20">
-
-      {/* 3D Badge Lanyard - Right side decoration */}
-      <div className="hidden lg:block absolute top-0 right-[3%] xl:right-[5%] z-20 pointer-events-auto opacity-80 hover:opacity-100 transition-opacity duration-500 scale-[0.65] xl:scale-75 origin-top-right">
-        <BadgeLanyard />
-      </div>
 
       <div className="container mx-auto px-4 relative z-10">
         <motion.div

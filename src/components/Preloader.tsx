@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import Spline from '@splinetool/react-spline';
+
 const Preloader = () => {
   const [progress, setProgress] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
@@ -38,15 +38,6 @@ const Preloader = () => {
           transition={{ duration: 0.8, ease: "easeInOut" }}
           className="fixed inset-0 z-[99999] bg-black flex flex-col items-center justify-center text-white overflow-hidden"
         >
-          {/* Small floating 3D Robot above content */}
-          <motion.div 
-            animate={{ y: [-8, 8, -8] }}
-            transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-            className="w-[120px] h-[120px] md:w-[160px] md:h-[160px] mb-6 pointer-events-none"
-          >
-            <Spline scene="https://prod.spline.design/FcZ66SFMX1YbF-0I/scene.splinecode" />
-          </motion.div>
-
           <div className="flex flex-col items-center w-full max-w-md px-4 relative z-10">
             <motion.div
               initial={{ opacity: 0, scale: 0.9 }}
