@@ -7,7 +7,6 @@ import {
   Bot, Shield, ExternalLink, ArrowRight,
   Code2, Sparkles, Globe, Terminal
 } from "lucide-react";
-import Spline from '@splinetool/react-spline';
 
 const Projects = () => {
   const ref = useRef(null);
@@ -89,11 +88,6 @@ const Projects = () => {
 
   return (
     <section ref={ref} id="projects" className="py-32 relative overflow-hidden bg-black/40">
-      
-      {/* 3D Spline Decoration */}
-      <div className="hidden lg:block absolute top-[20%] left-[-10%] w-[600px] h-[600px] z-0 pointer-events-none opacity-40">
-        <Spline scene="https://prod.spline.design/nU9Q-1h-2rD-0J0g/scene.splinecode" />
-      </div>
 
       <div className="container mx-auto px-4 relative z-10">
         <motion.div
