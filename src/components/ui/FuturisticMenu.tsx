@@ -46,7 +46,7 @@ export function FuturisticMenu({ items, radius = 90, position = "bottom-right" }
   };
 
   return (
-    <div className={`${positionClasses[position]} z-50 flex items-center justify-center w-20 h-20`}>
+    <div className={`${positionClasses[position]} z-50 hidden lg:flex items-center justify-center w-20 h-20`}>
       {/* Background radial ring */}
       <motion.div
         className="absolute inset-0 rounded-full border border-white/5 bg-[#1a1b26]/50 backdrop-blur-xl shadow-2xl"

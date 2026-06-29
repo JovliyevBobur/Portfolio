@@ -87,7 +87,7 @@ const Navbar = () => {
       initial="hidden"
       animate="visible"
       variants={navVariants}
-      className="fixed top-0 left-0 right-0 z-50 flex flex-col"
+      className="fixed top-0 left-0 right-0 z-50 hidden lg:flex flex-col"
     >
       {/* Top Bar (Clock, Date, Weather, Wind) */}
       <motion.div variants={itemVariants} className="bg-[#050505] text-primary w-full py-2 px-4 md:px-8 flex flex-col sm:flex-row justify-between items-center text-sm border-b border-primary/20">

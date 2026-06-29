@@ -17,7 +17,7 @@ export const PersistentPortrait = () => {
   ];
 
   return (
-    <div className="fixed bottom-10 right-10 z-[100]">
+    <div className="fixed bottom-10 right-10 z-[100] hidden lg:block">
       <AnimatePresence>
         {isOpen && (
           <motion.div
