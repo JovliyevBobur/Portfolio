@@ -165,7 +165,7 @@ const NavigationDrawer = ({
     closed: {
       x: "100%",
       transition: {
-        type: "spring",
+        type: "spring" as const,
         stiffness: 400,
         damping: 40,
       },
@@ -173,7 +173,7 @@ const NavigationDrawer = ({
     open: {
       x: 0,
       transition: {
-        type: "spring",
+        type: "spring" as const,
         stiffness: 300,
         damping: 30,
         staggerChildren: 0.07,
@@ -188,7 +188,7 @@ const NavigationDrawer = ({
       x: 0,
       opacity: 1,
       transition: {
-        type: "spring",
+        type: "spring" as const,
         stiffness: 300,
         damping: 24,
       },
